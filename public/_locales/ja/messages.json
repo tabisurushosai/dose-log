@@ -62,7 +62,15 @@
     "message": "Premium"
   },
   "premiumCopy": {
-    "message": "$3 買い切り・7日トライアルの枠組みです。Premium が無効でも記録機能は使えます。"
+    "message": "$PRICE$ 買い切り・$DAYS$日間トライアルの枠組みです。Premium が無効でも記録機能は使えます。",
+    "placeholders": {
+      "price": {
+        "content": "$1"
+      },
+      "days": {
+        "content": "$2"
+      }
+    }
   },
   "premiumTrialActive": {
     "message": "トライアル中（残り $DAYS$ 日）",
@@ -73,7 +81,7 @@
     }
   },
   "premiumTrialEnded": {
-    "message": "トライアルは終了しています。"
+    "message": "トライアルは終了しました。"
   },
   "premiumPurchased": {
     "message": "Premium は有効です。"
