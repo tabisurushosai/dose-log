@@ -70,11 +70,53 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
   const { storage, t, confirm } = dependencies;
   const root = dependencies.root ?? document.querySelector<HTMLElement>("#app");
   let appState: AppState | null = null;
+  let pendingFocusKey: string | null = null;
+
+  function rememberFocusedAction(): void {
+    if (!root) {
+      return;
+    }
+
+    const activeElement = document.activeElement;
+    if (!(activeElement instanceof HTMLElement) || !root.contains(activeElement)) {
+      return;
+    }
+
+    const focusKey = activeElement.dataset.focusKey;
+    if (focusKey) {
+      pendingFocusKey = focusKey;
+    }
+  }
+
+  function restoreFocusedAction(): void {
+    if (!root || !pendingFocusKey) {
+      return;
+    }
+
+    const target = root.querySelector<HTMLElement>(`[data-focus-key="${pendingFocusKey}"]`);
+    if (!target) {
+      pendingFocusKey = null;
+      return;
+    }
+
+    if (target.matches(":disabled")) {
+      if (!appState?.isBusy) {
+        pendingFocusKey = null;
+      }
+      return;
+    }
+
+    target.focus();
+    pendingFocusKey = null;
+  }
 
   function renderStatus(container: HTMLElement, state: AppState): void {
     const statusTone = state.hasStorageError ? "error" : state.statusTone;
     const status = createElement("p", `status status-${statusTone}`, state.statusMessage);
+    status.id = "status-message";
     status.setAttribute("role", state.hasStorageError ? "alert" : "status");
+    status.setAttribute("aria-live", state.hasStorageError ? "assertive" : "polite");
+    status.setAttribute("aria-atomic", "true");
     container.append(status);
   }
 
@@ -87,7 +129,11 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     header.append(createElement("p", "purpose", t("purposeText")));
 
     const loadingCard = createElement("section", "card state-card");
-    loadingCard.append(createElement("p", "status status-info", t("loadingStatus")));
+    const loadingStatus = createElement("p", "status status-info", t("loadingStatus"));
+    loadingStatus.setAttribute("role", "status");
+    loadingStatus.setAttribute("aria-live", "polite");
+    loadingStatus.setAttribute("aria-atomic", "true");
+    loadingCard.append(loadingStatus);
 
     container.append(header, loadingCard);
   }
@@ -134,8 +180,13 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     const clearButton = createElement("button", "secondary-button", t("clearButton"));
     clearButton.type = "button";
     clearButton.disabled = records.length === 0;
+    clearButton.dataset.focusKey = "clear-records";
+    clearButton.setAttribute("aria-describedby", "clear-button-description status-message");
     clearButton.addEventListener("click", handleClearRecords);
-    section.append(clearButton);
+
+    const clearButtonDescription = createElement("p", "sr-only", t("clearButtonDescription"));
+    clearButtonDescription.id = "clear-button-description";
+    section.append(clearButtonDescription, clearButton);
 
     container.append(section);
   }
@@ -173,6 +224,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
       return;
     }
 
+    rememberFocusedAction();
     root.setAttribute("aria-busy", String(state.isBusy));
     root.replaceChildren();
 
@@ -184,15 +236,20 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     const tapButton = createElement("button", "tap-button", t("tapButton"));
     tapButton.type = "button";
     tapButton.disabled = state.isBusy;
+    tapButton.dataset.focusKey = "tap-record";
     tapButton.setAttribute("aria-busy", String(state.isBusy));
+    tapButton.setAttribute("aria-describedby", "tap-button-description status-message");
     tapButton.addEventListener("click", handleTapRecord);
-    root.append(tapButton);
+    const tapButtonDescription = createElement("p", "sr-only", t("tapButtonDescription"));
+    tapButtonDescription.id = "tap-button-description";
+    root.append(tapButton, tapButtonDescription);
 
     renderStatus(root, state);
     renderLatestRecord(root, state.records);
     renderHistory(root, state.records);
     renderPremium(root, state.premiumState);
     root.append(createElement("p", "privacy-note", t("privacyNote")));
+    restoreFocusedAction();
   }
 
   async function setState(nextState: AppState): Promise<void> {

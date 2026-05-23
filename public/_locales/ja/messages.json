@@ -16,6 +16,9 @@
   "tapButton": {
     "message": "のんだ"
   },
+  "tapButtonDescription": {
+    "message": "現在の時刻を1件の記録として保存します。"
+  },
   "lastRecordTitle": {
     "message": "直近の記録"
   },
@@ -27,6 +30,9 @@
   },
   "clearButton": {
     "message": "記録をすべて消す"
+  },
+  "clearButtonDescription": {
+    "message": "この端末に保存した記録をすべて削除します。"
   },
   "confirmClear": {
     "message": "この端末に保存した記録をすべて消します。よろしいですか。"

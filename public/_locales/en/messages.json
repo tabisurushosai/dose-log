@@ -16,6 +16,9 @@
   "tapButton": {
     "message": "Taken"
   },
+  "tapButtonDescription": {
+    "message": "Save the current time as one record."
+  },
   "lastRecordTitle": {
     "message": "Latest record"
   },
@@ -27,6 +30,9 @@
   },
   "clearButton": {
     "message": "Delete all records"
+  },
+  "clearButtonDescription": {
+    "message": "Delete all records saved on this device."
   },
   "confirmClear": {
     "message": "Delete all records saved on this device?"
