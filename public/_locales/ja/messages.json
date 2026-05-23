@@ -1,0 +1,69 @@
+{
+  "extensionName": {
+    "message": "のんだ記録",
+    "description": "拡張機能名"
+  },
+  "extensionDescription": {
+    "message": "1回のタップで、のんだ時刻だけを記録します。名前・量・効果は扱いません。",
+    "description": "Chrome Web Store 向け説明"
+  },
+  "appTitle": {
+    "message": "のんだ記録"
+  },
+  "purposeText": {
+    "message": "1回押した時刻だけを、この端末の Chrome storage に保存します。名前・量・効果は扱いません。"
+  },
+  "tapButton": {
+    "message": "のんだ"
+  },
+  "lastRecordTitle": {
+    "message": "直近の記録"
+  },
+  "noRecords": {
+    "message": "まだ記録はありません。"
+  },
+  "historyTitle": {
+    "message": "最近の記録"
+  },
+  "clearButton": {
+    "message": "記録をすべて消す"
+  },
+  "confirmClear": {
+    "message": "この端末に保存した記録をすべて消します。よろしいですか。"
+  },
+  "savedToast": {
+    "message": "記録しました。"
+  },
+  "clearedToast": {
+    "message": "記録を消しました。"
+  },
+  "privacyNote": {
+    "message": "外部送信はありません。保存先は Chrome storage のみです。"
+  },
+  "premiumTitle": {
+    "message": "Premium"
+  },
+  "premiumCopy": {
+    "message": "$3 買い切り・7日トライアルの枠組みです。Premium が無効でも記録機能は使えます。"
+  },
+  "premiumTrialActive": {
+    "message": "トライアル中（残り $DAYS$ 日）",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
+  },
+  "premiumTrialEnded": {
+    "message": "トライアルは終了しています。"
+  },
+  "premiumPurchased": {
+    "message": "Premium は有効です。"
+  },
+  "premiumLinkLabel": {
+    "message": "購入リンク（オーナー設定待ち）"
+  },
+  "storageError": {
+    "message": "保存の読み書きに失敗しました。"
+  }
+}
