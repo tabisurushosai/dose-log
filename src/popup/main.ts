@@ -23,6 +23,7 @@ interface AppState {
   records: DoseRecord[];
   premiumState: PremiumState;
   statusMessage: string;
+  statusTone: "neutral" | "info" | "success" | "error";
   isBusy: boolean;
   hasStorageError: boolean;
 }
@@ -60,12 +61,28 @@ function formatRecordTime(record: DoseRecord): string {
 }
 
 function renderStatus(container: HTMLElement, state: AppState): void {
+  const statusTone = state.hasStorageError ? "error" : state.statusTone;
   const status = createElement(
     "p",
-    state.hasStorageError ? "status status-error" : "status",
+    `status status-${statusTone}`,
     state.statusMessage
   );
+  status.setAttribute("role", state.hasStorageError ? "alert" : "status");
   container.append(status);
+}
+
+function renderLoading(container: HTMLElement): void {
+  container.setAttribute("aria-busy", "true");
+  container.replaceChildren();
+
+  const header = createElement("header", "app-header");
+  header.append(createElement("h1", undefined, t("appTitle")));
+  header.append(createElement("p", "purpose", t("purposeText")));
+
+  const loadingCard = createElement("section", "card state-card");
+  loadingCard.append(createElement("p", "status status-info", t("loadingStatus")));
+
+  container.append(header, loadingCard);
 }
 
 function renderLatestRecord(container: HTMLElement, records: readonly DoseRecord[]): void {
@@ -146,6 +163,7 @@ function renderApp(state: AppState): void {
     return;
   }
 
+  root.setAttribute("aria-busy", String(state.isBusy));
   root.replaceChildren();
 
   const header = createElement("header", "app-header");
@@ -156,6 +174,7 @@ function renderApp(state: AppState): void {
   const tapButton = createElement("button", "tap-button", t("tapButton"));
   tapButton.type = "button";
   tapButton.disabled = state.isBusy;
+  tapButton.setAttribute("aria-busy", String(state.isBusy));
   tapButton.addEventListener("click", handleTapRecord);
   root.append(tapButton);
 
@@ -178,7 +197,13 @@ async function handleTapRecord(): Promise<void> {
 
   const nextRecord = createDoseRecord();
   const nextRecords = addDoseRecord(appState.records, nextRecord);
-  await setState({ ...appState, isBusy: true, hasStorageError: false });
+  await setState({
+    ...appState,
+    statusMessage: t("savingStatus"),
+    statusTone: "info",
+    isBusy: true,
+    hasStorageError: false
+  });
 
   try {
     await storage.setDoseRecords(nextRecords);
@@ -186,6 +211,7 @@ async function handleTapRecord(): Promise<void> {
       ...appState,
       records: nextRecords,
       statusMessage: t("savedToast"),
+      statusTone: "success",
       isBusy: false,
       hasStorageError: false
     });
@@ -193,6 +219,7 @@ async function handleTapRecord(): Promise<void> {
     await setState({
       ...appState,
       statusMessage: t("storageError"),
+      statusTone: "error",
       isBusy: false,
       hasStorageError: true
     });
@@ -208,7 +235,13 @@ async function handleClearRecords(): Promise<void> {
     return;
   }
 
-  await setState({ ...appState, isBusy: true, hasStorageError: false });
+  await setState({
+    ...appState,
+    statusMessage: t("clearingStatus"),
+    statusTone: "info",
+    isBusy: true,
+    hasStorageError: false
+  });
 
   try {
     await storage.setDoseRecords([]);
@@ -216,6 +249,7 @@ async function handleClearRecords(): Promise<void> {
       ...appState,
       records: [],
       statusMessage: t("clearedToast"),
+      statusTone: "success",
       isBusy: false,
       hasStorageError: false
     });
@@ -223,6 +257,7 @@ async function handleClearRecords(): Promise<void> {
     await setState({
       ...appState,
       statusMessage: t("storageError"),
+      statusTone: "error",
       isBusy: false,
       hasStorageError: true
     });
@@ -232,7 +267,7 @@ async function handleClearRecords(): Promise<void> {
 async function init(): Promise<void> {
   const root = document.querySelector<HTMLElement>("#app");
   if (root) {
-    root.textContent = "";
+    renderLoading(root);
   }
 
   try {
@@ -240,7 +275,8 @@ async function init(): Promise<void> {
     await setState({
       records,
       premiumState,
-      statusMessage: "",
+      statusMessage: t("readyStatus"),
+      statusTone: "neutral",
       isBusy: false,
       hasStorageError: false
     });
@@ -250,6 +286,7 @@ async function init(): Promise<void> {
       records: [],
       premiumState: fallbackState,
       statusMessage: t("storageError"),
+      statusTone: "error",
       isBusy: false,
       hasStorageError: true
     });

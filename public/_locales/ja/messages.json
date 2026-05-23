@@ -31,6 +31,18 @@
   "confirmClear": {
     "message": "この端末に保存した記録をすべて消します。よろしいですか。"
   },
+  "loadingStatus": {
+    "message": "保存済みの記録を読み込んでいます。"
+  },
+  "readyStatus": {
+    "message": "記録できます。"
+  },
+  "savingStatus": {
+    "message": "保存しています。"
+  },
+  "clearingStatus": {
+    "message": "削除しています。"
+  },
   "savedToast": {
     "message": "記録しました。"
   },

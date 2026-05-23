@@ -31,6 +31,18 @@
   "confirmClear": {
     "message": "Delete all records saved on this device?"
   },
+  "loadingStatus": {
+    "message": "Loading saved records."
+  },
+  "readyStatus": {
+    "message": "Ready to record."
+  },
+  "savingStatus": {
+    "message": "Saving."
+  },
+  "clearingStatus": {
+    "message": "Deleting records."
+  },
   "savedToast": {
     "message": "Recorded."
   },
