@@ -1,0 +1,69 @@
+{
+  "extensionName": {
+    "message": "Dose Log",
+    "description": "Extension name"
+  },
+  "extensionDescription": {
+    "message": "Records only the timestamp of a single tap that a dose was taken. It does not handle names, dosage, or effects.",
+    "description": "Chrome Web Store description"
+  },
+  "appTitle": {
+    "message": "Dose Log"
+  },
+  "purposeText": {
+    "message": "This saves only the time you press once to this device's Chrome storage. It does not handle names, dosage, or effects."
+  },
+  "tapButton": {
+    "message": "Taken"
+  },
+  "lastRecordTitle": {
+    "message": "Latest record"
+  },
+  "noRecords": {
+    "message": "No records yet."
+  },
+  "historyTitle": {
+    "message": "Recent records"
+  },
+  "clearButton": {
+    "message": "Delete all records"
+  },
+  "confirmClear": {
+    "message": "Delete all records saved on this device?"
+  },
+  "savedToast": {
+    "message": "Recorded."
+  },
+  "clearedToast": {
+    "message": "Records deleted."
+  },
+  "privacyNote": {
+    "message": "Nothing is sent outside the extension. Storage is Chrome storage only."
+  },
+  "premiumTitle": {
+    "message": "Premium"
+  },
+  "premiumCopy": {
+    "message": "A $3 one-time purchase and 7-day trial framework. The recording feature works even when Premium is inactive."
+  },
+  "premiumTrialActive": {
+    "message": "Trial active ($DAYS$ days left)",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
+  },
+  "premiumTrialEnded": {
+    "message": "The trial has ended."
+  },
+  "premiumPurchased": {
+    "message": "Premium is active."
+  },
+  "premiumLinkLabel": {
+    "message": "Purchase link (owner setup pending)"
+  },
+  "storageError": {
+    "message": "Could not read or write storage."
+  }
+}
