@@ -2,19 +2,13 @@ import { addDoseRecord, createDoseRecord, getLatestDoseRecord, type DoseRecord }
 import {
   PREMIUM_PRICE_USD,
   STRIPE_PAYMENT_LINK,
+  TRIAL_DAYS,
   createInitialPremiumState,
   getPremiumAccess,
   type PremiumState
 } from "../core/premium";
 import type { AppStorage } from "../storage/appStorage";
 import type { Translator } from "./i18n";
-
-const dateFormatter = new Intl.DateTimeFormat(undefined, {
-  month: "short",
-  day: "numeric",
-  hour: "2-digit",
-  minute: "2-digit"
-});
 
 interface AppState {
   records: DoseRecord[];
@@ -29,6 +23,7 @@ export interface DoseLogAppDependencies {
   storage: AppStorage;
   t: Translator;
   confirm: (message: string) => boolean;
+  locale?: string;
   root?: HTMLElement | null;
 }
 
@@ -62,15 +57,41 @@ async function ensurePremiumState(adapter: AppStorage): Promise<PremiumState> {
   return initialState;
 }
 
-function formatRecordTime(record: DoseRecord): string {
-  return dateFormatter.format(new Date(record.takenAtIso));
-}
-
 export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogApp {
   const { storage, t, confirm } = dependencies;
   const root = dependencies.root ?? document.querySelector<HTMLElement>("#app");
+  const locale = dependencies.locale || navigator.language || undefined;
+  const dateFormatter = new Intl.DateTimeFormat(locale, {
+    dateStyle: "medium",
+    timeStyle: "short"
+  });
+  const numberFormatter = new Intl.NumberFormat(locale);
+  const usdFormatter = new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0
+  });
   let appState: AppState | null = null;
   let pendingFocusKey: string | null = null;
+
+  function syncDocumentLocale(): void {
+    if (locale) {
+      document.documentElement.lang = locale;
+    }
+    document.title = t("appTitle");
+  }
+
+  function formatRecordTime(record: DoseRecord): string {
+    return dateFormatter.format(new Date(record.takenAtIso));
+  }
+
+  function formatNumber(value: number): string {
+    return numberFormatter.format(value);
+  }
+
+  function formatUsd(value: number): string {
+    return usdFormatter.format(value);
+  }
 
   function rememberFocusedAction(): void {
     if (!root) {
@@ -121,6 +142,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
   }
 
   function renderLoading(container: HTMLElement): void {
+    syncDocumentLocale();
     container.setAttribute("aria-busy", "true");
     container.replaceChildren();
 
@@ -199,18 +221,21 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     title.id = "premium-title";
     section.append(title);
 
-    section.append(createElement("p", "premium-copy", t("premiumCopy")));
+    const formattedPrice = formatUsd(PREMIUM_PRICE_USD);
+    section.append(
+      createElement("p", "premium-copy", t("premiumCopy", [formattedPrice, formatNumber(TRIAL_DAYS)]))
+    );
 
     const access = getPremiumAccess(state);
     let accessText = t("premiumTrialEnded");
     if (state.purchasedAtIso) {
       accessText = t("premiumPurchased");
     } else if (access.isTrialActive) {
-      accessText = t("premiumTrialActive", String(access.trialDaysRemaining));
+      accessText = t("premiumTrialActive", formatNumber(access.trialDaysRemaining));
     }
 
     section.append(createElement("p", "premium-status", accessText));
-    section.append(createElement("p", "premium-price", `$${PREMIUM_PRICE_USD}`));
+    section.append(createElement("p", "premium-price", formattedPrice));
 
     const linkLabel = createElement("p", "premium-link-label", t("premiumLinkLabel"));
     const linkValue = createElement("code", "premium-link", STRIPE_PAYMENT_LINK);
@@ -220,6 +245,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
   }
 
   function renderApp(state: AppState): void {
+    syncDocumentLocale();
     if (!root) {
       return;
     }

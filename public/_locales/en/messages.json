@@ -11,7 +11,7 @@
     "message": "Dose Log"
   },
   "purposeText": {
-    "message": "This saves only the time you press once to this device's Chrome storage. It does not handle names, dosage, or effects."
+    "message": "This saves only the time you tap once to this device's Chrome storage. It does not handle names, dosage, or effects."
   },
   "tapButton": {
     "message": "Taken"
@@ -38,16 +38,16 @@
     "message": "Delete all records saved on this device?"
   },
   "loadingStatus": {
-    "message": "Loading saved records."
+    "message": "Loading saved records..."
   },
   "readyStatus": {
     "message": "Ready to record."
   },
   "savingStatus": {
-    "message": "Saving."
+    "message": "Saving..."
   },
   "clearingStatus": {
-    "message": "Deleting records."
+    "message": "Deleting records..."
   },
   "savedToast": {
     "message": "Recorded."
@@ -62,7 +62,15 @@
     "message": "Premium"
   },
   "premiumCopy": {
-    "message": "A $3 one-time purchase and 7-day trial framework. The recording feature works even when Premium is inactive."
+    "message": "$PRICE$ one-time purchase with a $DAYS$-day trial framework. The recording feature works even when Premium is inactive.",
+    "placeholders": {
+      "price": {
+        "content": "$1"
+      },
+      "days": {
+        "content": "$2"
+      }
+    }
   },
   "premiumTrialActive": {
     "message": "Trial active ($DAYS$ days left)",
