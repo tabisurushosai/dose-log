@@ -1,9 +1,9 @@
-import type { DoseRecord } from "../core/doseLog";
-import type { PremiumState } from "../core/premium";
-
-export interface AppStorageAdapter {
-  getDoseRecords(): Promise<DoseRecord[]>;
-  setDoseRecords(records: readonly DoseRecord[]): Promise<void>;
-  getPremiumState(): Promise<PremiumState | null>;
-  setPremiumState(state: PremiumState): Promise<void>;
+export interface StorageAdapter {
+  get<TValue = unknown>(key: string): Promise<TValue | undefined>;
+  set<TValue>(key: string, value: TValue): Promise<void>;
 }
+
+export const STORAGE_KEYS = {
+  doseRecords: "doseRecords",
+  premiumState: "premiumState"
+} as const;
