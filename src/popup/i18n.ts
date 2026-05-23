@@ -22,16 +22,24 @@ const fallbackMessages: Record<string, string> = {
   storageError: "保存の読み書きに失敗しました。"
 };
 
-export function t(key: string, substitutions?: string | string[]): string {
-  const localized = chrome.i18n.getMessage(key, substitutions);
-  if (localized) {
-    return localized;
-  }
+export type TranslationSubstitutions = string | string[];
+export type Translator = (key: string, substitutions?: TranslationSubstitutions) => string;
+export type MessageResolver = (key: string, substitutions?: TranslationSubstitutions) => string;
 
-  if (key === "premiumTrialActive") {
-    const days = Array.isArray(substitutions) ? substitutions[0] : substitutions;
-    return `トライアル中（残り ${days ?? "0"} 日）`;
-  }
+export function createTranslator(resolveMessage?: MessageResolver): Translator {
+  return (key: string, substitutions?: TranslationSubstitutions): string => {
+    const localized = resolveMessage?.(key, substitutions);
+    if (localized) {
+      return localized;
+    }
 
-  return fallbackMessages[key] ?? key;
+    if (key === "premiumTrialActive") {
+      const days = Array.isArray(substitutions) ? substitutions[0] : substitutions;
+      return `トライアル中（残り ${days ?? "0"} 日）`;
+    }
+
+    return fallbackMessages[key] ?? key;
+  };
 }
+
+export const fallbackTranslator = createTranslator();
