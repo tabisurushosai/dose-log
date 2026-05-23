@@ -1,14 +1,8 @@
-import { normalizeDoseRecords, type DoseRecord } from "../core/doseLog";
-import { normalizePremiumState, type PremiumState } from "../core/premium";
-import type { AppStorageAdapter } from "./storageAdapter";
+/// <reference types="chrome" />
 
-const DOSE_RECORDS_KEY = "doseRecords";
-const PREMIUM_STATE_KEY = "premiumState";
+import type { StorageAdapter } from "./storageAdapter";
 
-type StoredValues = Partial<{
-  [DOSE_RECORDS_KEY]: unknown;
-  [PREMIUM_STATE_KEY]: unknown;
-}>;
+type StoredValues = Record<string, unknown>;
 
 function getFromChromeStorage(keys: string[]): Promise<StoredValues> {
   return new Promise((resolve, reject) => {
@@ -38,31 +32,16 @@ function setInChromeStorage(values: StoredValues): Promise<void> {
   });
 }
 
-export function createChromeStorageAdapter(): AppStorageAdapter {
+export function createChromeStorageAdapter(): StorageAdapter {
   return {
-    async getDoseRecords(): Promise<DoseRecord[]> {
-      const items = await getFromChromeStorage([DOSE_RECORDS_KEY]);
-      return normalizeDoseRecords(items[DOSE_RECORDS_KEY]);
+    async get<TValue = unknown>(key: string): Promise<TValue | undefined> {
+      const items = await getFromChromeStorage([key]);
+      return items[key] as TValue | undefined;
     },
 
-    async setDoseRecords(records: readonly DoseRecord[]): Promise<void> {
+    async set<TValue>(key: string, value: TValue): Promise<void> {
       await setInChromeStorage({
-        [DOSE_RECORDS_KEY]: normalizeDoseRecords(records)
-      });
-    },
-
-    async getPremiumState(): Promise<PremiumState | null> {
-      const items = await getFromChromeStorage([PREMIUM_STATE_KEY]);
-      if (items[PREMIUM_STATE_KEY] === undefined) {
-        return null;
-      }
-
-      return normalizePremiumState(items[PREMIUM_STATE_KEY]);
-    },
-
-    async setPremiumState(state: PremiumState): Promise<void> {
-      await setInChromeStorage({
-        [PREMIUM_STATE_KEY]: normalizePremiumState(state)
+        [key]: value
       });
     }
   };

@@ -6,7 +6,7 @@ import {
   getPremiumAccess,
   type PremiumState
 } from "../core/premium";
-import type { AppStorageAdapter } from "../storage/storageAdapter";
+import type { AppStorage } from "../storage/appStorage";
 import type { Translator } from "./i18n";
 
 const dateFormatter = new Intl.DateTimeFormat(undefined, {
@@ -26,7 +26,7 @@ interface AppState {
 }
 
 export interface DoseLogAppDependencies {
-  storage: AppStorageAdapter;
+  storage: AppStorage;
   t: Translator;
   confirm: (message: string) => boolean;
   root?: HTMLElement | null;
@@ -51,7 +51,7 @@ function createElement<K extends keyof HTMLElementTagNameMap>(
   return element;
 }
 
-async function ensurePremiumState(adapter: AppStorageAdapter): Promise<PremiumState> {
+async function ensurePremiumState(adapter: AppStorage): Promise<PremiumState> {
   const storedState = await adapter.getPremiumState();
   if (storedState) {
     return storedState;
