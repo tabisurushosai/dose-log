@@ -34,6 +34,7 @@ export interface DoseLogApp {
 const HISTORY_DISPLAY_LIMIT = 10;
 const APP_TITLE_ID = "app-title";
 const STATUS_MESSAGE_ID = "status-message";
+const ONBOARDING_GUIDE_COPY_ID = "onboarding-guide-copy";
 
 function createElement<K extends keyof HTMLElementTagNameMap>(
   tagName: K,
@@ -183,7 +184,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     container.append(renderHeader(), loadingCard);
   }
 
-  function renderLatestRecord(container: HTMLElement, records: readonly DoseRecord[]): void {
+  function renderLatestRecord(container: HTMLElement, records: readonly DoseRecord[], tapButtonLabel: string): void {
     const section = createElement("section", "card");
     section.setAttribute("aria-labelledby", "latest-record-title");
 
@@ -195,7 +196,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     const latestRecordText = createElement(
       "p",
       latestRecord ? "latest-time" : "empty-state",
-      latestRecord ? undefined : t("emptyLatestRecord")
+      latestRecord ? undefined : t("emptyLatestRecord", tapButtonLabel)
     );
     latestRecordText.setAttribute("aria-live", "polite");
     latestRecordText.setAttribute("aria-atomic", "true");
@@ -207,7 +208,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     container.append(section);
   }
 
-  function renderOnboardingGuide(container: HTMLElement, state: AppState): void {
+  function renderOnboardingGuide(container: HTMLElement, state: AppState, tapButtonLabel: string): void {
     if (state.records.length > 0 || state.hasStorageError) {
       return;
     }
@@ -218,12 +219,14 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     const title = createElement("h2", undefined, t("onboardingGuideTitle"));
     title.id = "onboarding-guide-title";
     section.append(title);
-    section.append(createElement("p", "onboarding-copy", t("onboardingGuideCopy")));
+    const copy = createElement("p", "onboarding-copy", t("onboardingGuideCopy", tapButtonLabel));
+    copy.id = ONBOARDING_GUIDE_COPY_ID;
+    section.append(copy);
 
     container.append(section);
   }
 
-  function renderHistory(container: HTMLElement, records: readonly DoseRecord[]): void {
+  function renderHistory(container: HTMLElement, records: readonly DoseRecord[], tapButtonLabel: string): void {
     const section = createElement("section", "card");
     section.setAttribute("aria-labelledby", "history-title");
 
@@ -233,7 +236,11 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
 
     if (records.length === 0) {
       section.append(
-        createElement("p", "empty-state", t("emptyHistoryRecords", formatNumber(HISTORY_DISPLAY_LIMIT)))
+        createElement(
+          "p",
+          "empty-state",
+          t("emptyHistoryRecords", [formatNumber(HISTORY_DISPLAY_LIMIT), tapButtonLabel])
+        )
       );
     } else {
       const list = createElement("ol", "history-list");
@@ -305,12 +312,17 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
 
     root.append(renderHeader());
 
-    const tapButton = createElement("button", "tap-button", t("tapButton"));
+    const tapButtonLabel = t("tapButton");
+    const tapButton = createElement("button", "tap-button", tapButtonLabel);
     tapButton.type = "button";
     tapButton.disabled = state.isBusy;
     tapButton.dataset["focusKey"] = "tap-record";
     tapButton.setAttribute("aria-busy", String(state.isBusy));
-    tapButton.setAttribute("aria-describedby", `tap-button-description ${STATUS_MESSAGE_ID}`);
+    const tapButtonDescriptionIds = ["tap-button-description", STATUS_MESSAGE_ID];
+    if (state.records.length === 0 && !state.hasStorageError) {
+      tapButtonDescriptionIds.splice(1, 0, ONBOARDING_GUIDE_COPY_ID);
+    }
+    tapButton.setAttribute("aria-describedby", tapButtonDescriptionIds.join(" "));
     tapButton.addEventListener("click", () => {
       void handleTapRecord();
     });
@@ -318,10 +330,10 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     tapButtonDescription.id = "tap-button-description";
     root.append(tapButton, tapButtonDescription);
 
-    renderOnboardingGuide(root, state);
+    renderOnboardingGuide(root, state, tapButtonLabel);
     renderStatus(root, state);
-    renderLatestRecord(root, state.records);
-    renderHistory(root, state.records);
+    renderLatestRecord(root, state.records, tapButtonLabel);
+    renderHistory(root, state.records, tapButtonLabel);
     renderPremium(root, state.premiumState);
     root.append(createElement("p", "privacy-note", t("privacyNote")));
     restoreFocusedAction();
@@ -416,7 +428,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
       setState({
         records,
         premiumState,
-        statusMessage: records.length === 0 ? t("firstRunGuide") : t("readyStatus"),
+        statusMessage: records.length === 0 ? t("firstRunGuide", t("tapButton")) : t("readyStatus"),
         statusTone: "neutral",
         isBusy: false,
         hasStorageError: false
