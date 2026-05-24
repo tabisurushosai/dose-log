@@ -3,6 +3,7 @@
   --focus-ring-inner: #ffffff;
   --surface: #ffffff;
   --surface-muted: #f8fafc;
+  --surface-subtle: #f1f5f9;
   --page-bg: #e7eef7;
   --brand: #166534;
   --brand-strong: #052e16;
@@ -13,6 +14,7 @@
   --text-body: #24364b;
   --text-muted: #475569;
   --border-subtle: #d5dee9;
+  --shadow-card: 0 10px 24px rgb(15 23 42 / 0.07);
   color: #0f172a;
   background: #f8fafc;
   color-scheme: light;
@@ -55,14 +57,14 @@ button {
 #app {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  padding: 24px 22px 30px;
+  gap: 16px;
+  padding: 24px 22px 28px;
 }
 
 .app-header {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 9px;
   padding: 2px 2px 0;
 }
 
@@ -81,10 +83,10 @@ h1 {
 
 h2 {
   color: var(--text-strong);
-  font-size: 1rem;
+  font-size: 0.96rem;
   font-weight: 800;
   line-height: 1.35;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.02em;
 }
 
 .purpose,
@@ -97,11 +99,12 @@ h2 {
 .purpose {
   max-width: 34ch;
   color: var(--text-muted);
+  font-size: 0.98rem;
 }
 
 .tap-button {
-  min-height: 108px;
-  padding: 26px 20px;
+  min-height: 104px;
+  padding: 25px 20px;
   border: 0;
   border-radius: 24px;
   color: #ffffff;
@@ -165,17 +168,19 @@ h2 {
 }
 
 .status {
+  --status-accent: #64748b;
+  --status-bg: var(--surface-muted);
   display: flex;
   align-items: center;
   gap: 10px;
-  min-height: 58px;
-  padding: 14px 16px 14px 15px;
-  border: 1px solid #cbd5e1;
+  min-height: 56px;
+  padding: 14px 16px 14px 14px;
+  border: 1px solid var(--status-accent);
   border-left-width: 6px;
   border-radius: 16px;
   color: var(--text-body);
-  background: var(--surface);
-  box-shadow: 0 6px 18px rgb(15 23 42 / 0.06);
+  background: var(--status-bg);
+  box-shadow: 0 6px 18px rgb(15 23 42 / 0.05);
   font-weight: 700;
   line-height: 1.45;
   overflow-wrap: anywhere;
@@ -186,44 +191,40 @@ h2 {
   width: 0.8rem;
   height: 0.8rem;
   border-radius: 999px;
-  background: currentColor;
+  background: var(--status-accent);
   box-shadow: 0 0 0 4px rgb(255 255 255 / 0.9);
   content: "";
 }
 
 .status-neutral {
-  border-color: #64748b;
-  color: var(--text-body);
-  background: var(--surface-muted);
+  --status-accent: #64748b;
+  --status-bg: var(--surface-muted);
 }
 
 .status-info {
-  border-color: var(--info);
-  color: var(--info);
-  background: #eff6ff;
+  --status-accent: var(--info);
+  --status-bg: #eff6ff;
 }
 
 .status-success {
-  border-color: var(--success);
-  color: var(--success);
-  background: #ecfdf5;
+  --status-accent: var(--success);
+  --status-bg: #ecfdf5;
 }
 
 .status-error {
-  border-color: var(--danger);
-  color: var(--danger);
-  background: #fff1f2;
+  --status-accent: var(--danger);
+  --status-bg: #fff1f2;
 }
 
 .card {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 14px;
   padding: 20px;
   border: 1px solid var(--border-subtle);
   border-radius: 20px;
   background: var(--surface);
-  box-shadow: 0 10px 24px rgb(15 23 42 / 0.06);
+  box-shadow: var(--shadow-card);
 }
 
 .state-card {
@@ -236,7 +237,7 @@ h2 {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 16px 18px;
+  padding: 16px 18px 17px;
   border: 1px solid #15803d;
   border-left-width: 6px;
   border-radius: 18px;
@@ -250,6 +251,7 @@ h2 {
 }
 
 .onboarding-copy {
+  color: #1f5131;
   line-height: 1.55;
 }
 
@@ -260,12 +262,12 @@ h2 {
 }
 
 .latest-time {
-  padding: 17px 16px;
+  padding: 18px 16px;
   border: 1px solid #bfdbfe;
   border-radius: 16px;
   color: var(--text-strong);
   background: #eff6ff;
-  font-size: 1.35rem;
+  font-size: 1.28rem;
   font-weight: 800;
   line-height: 1.3;
 }
@@ -279,12 +281,13 @@ h2 {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  padding: 15px;
+  padding: 15px 16px;
   border: 1px dashed #94a3b8;
   border-radius: 16px;
   color: var(--text-body);
-  background: #f8fafc;
-  line-height: 1.5;
+  background: var(--surface-muted);
+  font-size: 0.98rem;
+  line-height: 1.55;
 }
 
 .empty-state::before {
@@ -315,7 +318,7 @@ h2 {
   grid-template-columns: 2rem 1fr;
   align-items: center;
   gap: 10px;
-  padding: 12px;
+  padding: 12px 13px;
   border: 1px solid #e2e8f0;
   border-radius: 14px;
   background: #fbfdff;
@@ -333,7 +336,7 @@ h2 {
   height: 2rem;
   border-radius: 999px;
   color: #0f172a;
-  background: #e2e8f0;
+  background: var(--surface-subtle);
   counter-increment: history;
   content: counter(history);
   font-size: 0.9rem;
