@@ -32,7 +32,6 @@ const fallbackMessages = {
 export type TranslationSubstitutions = string | string[];
 export type MessageKey = keyof typeof fallbackMessages;
 export type Translator = (key: MessageKey, substitutions?: TranslationSubstitutions) => string;
-export type MessageResolver = (key: MessageKey, substitutions?: TranslationSubstitutions) => string;
 
 function applyFallbackSubstitutions(message: string, substitutions?: TranslationSubstitutions): string {
   if (substitutions === undefined) {
@@ -43,7 +42,7 @@ function applyFallbackSubstitutions(message: string, substitutions?: Translation
   return values.reduce((result, value, index) => result.split(`$${index + 1}`).join(value), message);
 }
 
-export function createTranslator(resolveMessage?: MessageResolver): Translator {
+export function createTranslator(resolveMessage?: Translator): Translator {
   return (key: MessageKey, substitutions?: TranslationSubstitutions): string => {
     const localized = resolveMessage?.(key, substitutions);
     if (localized) {

@@ -1,15 +1,15 @@
-import type { StorageAdapter, StorageKey, StoredValues } from "./storageAdapter";
+import type { PersistedValue, StorageAdapter, StorageKey, StoredValues } from "./storageAdapter";
 
-function getFromChromeStorage(keys: readonly StorageKey[]): Promise<StoredValues> {
+function getFromChromeStorage(key: StorageKey): Promise<PersistedValue | undefined> {
   return new Promise((resolve, reject) => {
-    chrome.storage.local.get([...keys], (items) => {
+    chrome.storage.local.get(key, (items) => {
       const error = chrome.runtime.lastError;
       if (error) {
         reject(new Error(error.message));
         return;
       }
 
-      resolve(items as StoredValues);
+      resolve((items as StoredValues)[key]);
     });
   });
 }
@@ -30,12 +30,11 @@ function setInChromeStorage(values: StoredValues): Promise<void> {
 
 export function createChromeStorageAdapter(): StorageAdapter {
   return {
-    async get(key: StorageKey): Promise<unknown | undefined> {
-      const items = await getFromChromeStorage([key]);
-      return items[key];
+    async get(key: StorageKey): Promise<PersistedValue | undefined> {
+      return getFromChromeStorage(key);
     },
 
-    async set(key: StorageKey, value: unknown): Promise<void> {
+    async set(key: StorageKey, value: PersistedValue): Promise<void> {
       await setInChromeStorage({
         [key]: value
       });
