@@ -20,25 +20,38 @@
     "message": "今の時刻を1件の記録として保存します。"
   },
   "onboardingGuideTitle": {
-    "message": "はじめ方"
+    "message": "初回ガイド"
   },
   "onboardingGuideCopy": {
-    "message": "のんだ直後に上のボタンを1回押すだけで、その時刻が直近の記録と最近の記録に表示されます。"
+    "message": "のんだ直後に「$BUTTON$」を1回押すだけで、時刻を残せます。",
+    "placeholders": {
+      "button": {
+        "content": "$1"
+      }
+    }
   },
   "lastRecordTitle": {
     "message": "直近の記録"
   },
   "emptyLatestRecord": {
-    "message": "最初の記録をすると、直近の時刻がここに表示されます。"
+    "message": "まだ記録はありません。上の「$BUTTON$」ボタンを押すと、直近の時刻がここに表示されます。",
+    "placeholders": {
+      "button": {
+        "content": "$1"
+      }
+    }
   },
   "historyTitle": {
     "message": "最近の記録"
   },
   "emptyHistoryRecords": {
-    "message": "記録すると、最新の$COUNT$件がここに表示されます。",
+    "message": "まだ履歴はありません。上の「$BUTTON$」ボタンで最初に記録すると、最新の$COUNT$件がここに表示されます。",
     "placeholders": {
       "count": {
         "content": "$1"
+      },
+      "button": {
+        "content": "$2"
       }
     }
   },
@@ -58,7 +71,12 @@
     "message": "記録できます。"
   },
   "firstRunGuide": {
-    "message": "まずは、のんだ直後に大きなボタンを1回押してください。"
+    "message": "初回は、のんだ直後に「$BUTTON$」を押してください。",
+    "placeholders": {
+      "button": {
+        "content": "$1"
+      }
+    }
   },
   "savingStatus": {
     "message": "保存しています。"
