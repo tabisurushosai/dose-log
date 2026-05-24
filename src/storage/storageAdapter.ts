@@ -1,4 +1,8 @@
+export type StorageKey = string;
+export type PersistedValue = unknown;
+export type StoredValues = Record<StorageKey, PersistedValue>;
+
 export interface StorageAdapter {
-  get<TValue = unknown>(key: string): Promise<TValue | undefined>;
-  set<TValue>(key: string, value: TValue): Promise<void>;
+  get(key: StorageKey): Promise<PersistedValue | undefined>;
+  set(key: StorageKey, value: PersistedValue): Promise<void>;
 }

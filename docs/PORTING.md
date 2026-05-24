@@ -33,6 +33,23 @@ platform's local storage and pass it through `createAppStorage(...)`. Do not
 rename keys or add migrations unless the stored data format intentionally
 changes in a separate, scoped task.
 
+## Mobile shell checklist
+
+When adding an iOS or Android shell, keep the shell thin:
+
+1. Reuse `src/core/` as-is for dose record and premium/trial calculations. If
+   code needs `chrome.*`, DOM, network, filesystem, or native SDK APIs, it does
+   not belong in `src/core/`.
+2. Implement the small `StorageAdapter` contract for the platform. The adapter
+   should only read and write raw `unknown` values by string key; keep app keys,
+   normalization, and compatibility rules in `src/storage/appStorage.ts`.
+3. Inject platform services from the entry point, the same way the Chrome popup
+   passes storage, translation, confirmation, and locale dependencies into
+   `createDoseLogApp(...)`.
+4. Keep UI code free of Chrome-only imports unless it is a Chrome entry point.
+   Platform-specific UI glue should live beside that platform's entry point, not
+   inside reusable core or storage-domain modules.
+
 ## Chrome permissions and offline behavior
 
 Porting work must not add extension permissions, host permissions, API calls,
