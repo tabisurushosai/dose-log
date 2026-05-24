@@ -22,9 +22,6 @@
   "lastRecordTitle": {
     "message": "直近の記録"
   },
-  "noRecords": {
-    "message": "まだ記録はありません。"
-  },
   "emptyLatestRecord": {
     "message": "まだ記録はありません。のんだ直後に上のボタンを押すと、ここに時刻が表示されます。"
   },

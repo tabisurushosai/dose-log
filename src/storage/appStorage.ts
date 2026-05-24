@@ -12,7 +12,7 @@ export interface AppStorage {
 export function createAppStorage(adapter: StorageAdapter): AppStorage {
   return {
     async getDoseRecords(): Promise<DoseRecord[]> {
-      return normalizeDoseRecords(await adapter.get(STORAGE_KEYS.doseRecords));
+      return normalizeDoseRecords(await adapter.get<unknown>(STORAGE_KEYS.doseRecords));
     },
 
     async setDoseRecords(records: readonly DoseRecord[]): Promise<void> {
@@ -20,7 +20,7 @@ export function createAppStorage(adapter: StorageAdapter): AppStorage {
     },
 
     async getPremiumState(): Promise<PremiumState | null> {
-      const state = await adapter.get(STORAGE_KEYS.premiumState);
+      const state = await adapter.get<unknown>(STORAGE_KEYS.premiumState);
       if (state === undefined) {
         return null;
       }

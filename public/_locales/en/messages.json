@@ -22,9 +22,6 @@
   "lastRecordTitle": {
     "message": "Latest record"
   },
-  "noRecords": {
-    "message": "No records yet."
-  },
   "emptyLatestRecord": {
     "message": "No records yet. After taking a dose, tap the button above and the time will appear here."
   },
