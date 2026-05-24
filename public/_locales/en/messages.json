@@ -4,26 +4,26 @@
     "description": "Extension name"
   },
   "extensionDescription": {
-    "message": "Records only the time you tap after taking a dose. It does not handle names, dosage, or effects.",
+    "message": "Record only the time you tap after taking a dose. Names, dose amounts, and effects are not stored.",
     "description": "Chrome Web Store description"
   },
   "appTitle": {
     "message": "Dose Log"
   },
   "purposeText": {
-    "message": "This saves only the time you tap the button to this device's Chrome storage. It does not handle names, dosage, or effects."
+    "message": "Saves only the time you tap the button in Chrome storage on this device. Names, dose amounts, and effects are not stored."
   },
   "tapButton": {
     "message": "Taken"
   },
   "tapButtonDescription": {
-    "message": "Save the current time as a record."
+    "message": "Save the current time as one record."
   },
   "onboardingGuideTitle": {
     "message": "Getting started"
   },
   "onboardingGuideCopy": {
-    "message": "Right after taking a dose, tap \"$BUTTON$\" once to save the time.",
+    "message": "After taking a dose, tap \"$BUTTON$\" once to save the time.",
     "placeholders": {
       "button": {
         "content": "$1"
@@ -34,7 +34,7 @@
     "message": "Latest record"
   },
   "emptyLatestRecord": {
-    "message": "No records yet. Tap \"$BUTTON$\" above and the latest time will appear here.",
+    "message": "No records yet. Tap \"$BUTTON$\" above to show your latest saved time here.",
     "placeholders": {
       "button": {
         "content": "$1"
@@ -45,7 +45,7 @@
     "message": "Recent records"
   },
   "emptyHistoryRecords": {
-    "message": "No history yet. After your first tap on \"$BUTTON$\", your $COUNT$ most recent records will appear here.",
+    "message": "No history yet. Create your first record with \"$BUTTON$\" above; your $COUNT$ most recent records will appear here.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -59,13 +59,13 @@
     "message": "Delete all records"
   },
   "clearButtonDescription": {
-    "message": "Delete all records saved on this device."
+    "message": "Deletes all records saved on this device."
   },
   "confirmClear": {
     "message": "Delete all records saved on this device?"
   },
   "loadingStatus": {
-    "message": "Loading saved records..."
+    "message": "Loading saved records."
   },
   "readyStatus": {
     "message": "Ready to record."
@@ -79,25 +79,25 @@
     }
   },
   "savingStatus": {
-    "message": "Saving..."
+    "message": "Saving."
   },
   "clearingStatus": {
-    "message": "Deleting records..."
+    "message": "Deleting records."
   },
   "savedToast": {
-    "message": "Recorded."
+    "message": "Record saved."
   },
   "clearedToast": {
-    "message": "Records deleted."
+    "message": "All records deleted."
   },
   "privacyNote": {
-    "message": "Nothing is sent outside this extension. Records are stored only in Chrome storage on this device."
+    "message": "No data is sent outside this extension. Records are stored only in Chrome storage on this device."
   },
   "premiumTitle": {
     "message": "Premium"
   },
   "premiumCopy": {
-    "message": "Premium is a one-time purchase of $PRICE$ and includes a $DAYS$-day trial. Recording works even when Premium is inactive.",
+    "message": "Premium is a one-time purchase ($PRICE$) and includes a $DAYS$ trial. Recording still works when Premium is inactive.",
     "placeholders": {
       "price": {
         "content": "$1"
@@ -108,7 +108,7 @@
     }
   },
   "premiumTrialActive": {
-    "message": "Trial active. Days remaining: $DAYS$.",
+    "message": "Trial active: $DAYS$ remaining.",
     "placeholders": {
       "days": {
         "content": "$1"
@@ -125,6 +125,6 @@
     "message": "Purchase link (owner setup pending)"
   },
   "storageError": {
-    "message": "Could not read or write saved data."
+    "message": "Could not read or write saved records."
   }
 }

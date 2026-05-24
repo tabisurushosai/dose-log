@@ -66,13 +66,10 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
   const { storage, t, confirm } = dependencies;
   const root = dependencies.root ?? document.querySelector<HTMLElement>("#app");
   const locale = dependencies.locale || navigator.language || undefined;
+  const isJapaneseLocale = locale?.toLowerCase().startsWith("ja") ?? false;
   const dateFormatter = new Intl.DateTimeFormat(locale, {
-    weekday: "short",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit"
+    dateStyle: "medium",
+    timeStyle: "short"
   });
   const numberFormatter = new Intl.NumberFormat(locale, {
     maximumFractionDigits: 0
@@ -99,6 +96,24 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
 
   function formatNumber(value: number): string {
     return numberFormatter.format(value);
+  }
+
+  function formatDayCount(value: number): string {
+    const formattedValue = formatNumber(value);
+    if (isJapaneseLocale) {
+      return `${formattedValue}日`;
+    }
+
+    return `${formattedValue} ${value === 1 ? "day" : "days"}`;
+  }
+
+  function formatTrialDuration(value: number): string {
+    const formattedValue = formatNumber(value);
+    if (isJapaneseLocale) {
+      return `${formattedValue}日間`;
+    }
+
+    return `${formattedValue}-day`;
   }
 
   function formatUsd(value: number): string {
@@ -278,7 +293,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
 
     const formattedPrice = formatUsd(PREMIUM_PRICE_USD);
     section.append(
-      createElement("p", "premium-copy", t("premiumCopy", [formattedPrice, formatNumber(TRIAL_DAYS)]))
+      createElement("p", "premium-copy", t("premiumCopy", [formattedPrice, formatTrialDuration(TRIAL_DAYS)]))
     );
 
     const access = getPremiumAccess(state);
@@ -286,7 +301,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     if (state.purchasedAtIso) {
       accessText = t("premiumPurchased");
     } else if (access.isTrialActive) {
-      accessText = t("premiumTrialActive", formatNumber(access.trialDaysRemaining));
+      accessText = t("premiumTrialActive", formatDayCount(access.trialDaysRemaining));
     }
 
     section.append(createElement("p", "premium-status", accessText));
