@@ -19,17 +19,23 @@
   "tapButtonDescription": {
     "message": "現在の時刻を1件の記録として保存します。"
   },
+  "onboardingGuideTitle": {
+    "message": "はじめ方"
+  },
+  "onboardingGuideCopy": {
+    "message": "のんだ直後に上のボタンを1回押すだけで、直近の時刻と最近の記録に残ります。"
+  },
   "lastRecordTitle": {
     "message": "直近の記録"
   },
   "emptyLatestRecord": {
-    "message": "まだ記録はありません。のんだ直後に上のボタンを押すと、ここに時刻が表示されます。"
+    "message": "最初の記録をすると、直近の時刻がここに表示されます。"
   },
   "historyTitle": {
     "message": "最近の記録"
   },
   "emptyHistoryRecords": {
-    "message": "記録すると、最近の$COUNT$件がここに並びます。",
+    "message": "記録後、最近の$COUNT$件がここに並びます。",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -52,7 +58,7 @@
     "message": "記録できます。"
   },
   "firstRunGuide": {
-    "message": "はじめてなら、のんだ直後に大きなボタンを1回押してください。"
+    "message": "まずは、のんだ直後に大きなボタンを1回押してください。"
   },
   "savingStatus": {
     "message": "保存しています。"

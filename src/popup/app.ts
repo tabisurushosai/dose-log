@@ -191,6 +191,22 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     container.append(section);
   }
 
+  function renderOnboardingGuide(container: HTMLElement, state: AppState): void {
+    if (state.records.length > 0 || state.hasStorageError) {
+      return;
+    }
+
+    const section = createElement("section", "onboarding-guide");
+    section.setAttribute("aria-labelledby", "onboarding-guide-title");
+
+    const title = createElement("h2", undefined, t("onboardingGuideTitle"));
+    title.id = "onboarding-guide-title";
+    section.append(title);
+    section.append(createElement("p", "onboarding-copy", t("onboardingGuideCopy")));
+
+    container.append(section);
+  }
+
   function renderHistory(container: HTMLElement, records: readonly DoseRecord[]): void {
     const section = createElement("section", "card");
     section.setAttribute("aria-labelledby", "history-title");
@@ -285,6 +301,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     tapButtonDescription.id = "tap-button-description";
     root.append(tapButton, tapButtonDescription);
 
+    renderOnboardingGuide(root, state);
     renderStatus(root, state);
     renderLatestRecord(root, state.records);
     renderHistory(root, state.records);
