@@ -1,8 +1,10 @@
 export type StorageKey = string;
 export type StorageValue = unknown;
-export type StorageSnapshot = Record<StorageKey, StorageValue>;
+
+export type StorageRead = (key: StorageKey) => Promise<StorageValue | undefined>;
+export type StorageWrite = (key: StorageKey, value: StorageValue) => Promise<void>;
 
 export interface StorageAdapter {
-  read(key: StorageKey): Promise<StorageValue | undefined>;
-  write(key: StorageKey, value: StorageValue): Promise<void>;
+  readonly read: StorageRead;
+  readonly write: StorageWrite;
 }

@@ -10,9 +10,9 @@ path for future iOS/Android app shells.
   `npm run typecheck:core` checks this directory without DOM or Chrome ambient
   types so portability regressions fail during the normal build.
 - `src/storage/storageAdapter.ts` defines the platform-neutral key/value storage
-  port. It only exposes `read(key)` and `write(key, value)` for string keys and
-  `unknown` values; app-level key names and normalization stay outside the
-  platform adapter.
+  port. It exposes named function types for `read(key)` and `write(key, value)`
+  over string keys and `unknown` values; app-level key names, normalization,
+  batching, and platform result shapes stay outside the platform adapter.
 - `src/storage/appStorage.ts` maps persisted values to the app domain and keeps
   the existing storage keys (`APP_STORAGE_KEYS`) and normalization rules in one
   place. `npm run typecheck:portable` checks `src/core/`, `storageAdapter`, and
@@ -34,6 +34,14 @@ For another platform, provide a `StorageAdapter` implementation backed by that
 platform's local storage and pass it through `createAppStorage(...)`. Do not
 rename keys or add migrations unless the stored data format intentionally
 changes in a separate, scoped task.
+
+Storage adapter implementations should keep the platform surface private:
+
+- return `undefined` from `read(key)` only when that key is missing
+- persist exactly the value passed to `write(key, value)` for that key
+- translate platform errors into rejected promises
+- avoid leaking platform-specific batch APIs, snapshots, SDK objects, or globals
+  through `StorageAdapter`
 
 ## Mobile shell checklist
 
