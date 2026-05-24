@@ -192,25 +192,25 @@ h2 {
 }
 
 .status-neutral {
-  border-color: #cbd5e1;
+  border-color: #64748b;
   color: var(--text-body);
   background: var(--surface-muted);
 }
 
 .status-info {
-  border-color: #93c5fd;
+  border-color: var(--info);
   color: var(--info);
   background: #eff6ff;
 }
 
 .status-success {
-  border-color: #4ade80;
+  border-color: var(--success);
   color: var(--success);
   background: #ecfdf5;
 }
 
 .status-error {
-  border-color: #f87171;
+  border-color: var(--danger);
   color: var(--danger);
   background: #fff1f2;
 }
@@ -237,8 +237,8 @@ h2 {
   flex-direction: column;
   gap: 8px;
   padding: 16px 18px;
-  border: 1px solid #bbf7d0;
-  border-left: 6px solid #16a34a;
+  border: 1px solid #15803d;
+  border-left-width: 6px;
   border-radius: 18px;
   color: #14532d;
   background: #f0fdf4;
