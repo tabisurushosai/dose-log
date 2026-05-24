@@ -1,6 +1,13 @@
 :root {
   --focus-ring-color: #1d4ed8;
   --focus-ring-inner: #ffffff;
+  --surface: #ffffff;
+  --surface-muted: #f8fafc;
+  --page-bg: #e7eef7;
+  --text-strong: #0f172a;
+  --text-body: #24364b;
+  --text-muted: #475569;
+  --border-subtle: #d5dee9;
   color: #0f172a;
   background: #f8fafc;
   color-scheme: light;
@@ -20,10 +27,12 @@
 }
 
 body {
+  width: min(100vw, 420px);
   min-width: 360px;
   max-width: 420px;
   margin: 0;
-  background: #e8eef6;
+  background:
+    linear-gradient(180deg, #f8fbff 0%, var(--page-bg) 100%);
 }
 
 button,
@@ -39,8 +48,8 @@ button {
 #app {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  padding: 24px 22px 26px;
+  gap: 16px;
+  padding: 24px 22px 28px;
 }
 
 .app-header {
@@ -57,29 +66,30 @@ p {
 }
 
 h1 {
-  color: #0f172a;
+  color: var(--text-strong);
   font-size: 1.9rem;
   line-height: 1.1;
   letter-spacing: -0.03em;
 }
 
 h2 {
-  color: #111827;
-  font-size: 1.05rem;
-  line-height: 1.3;
-  letter-spacing: -0.01em;
+  color: var(--text-strong);
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
 }
 
 .purpose,
 .privacy-note,
 .premium-copy {
-  color: #334155;
+  color: var(--text-body);
   line-height: 1.6;
 }
 
 .tap-button {
   min-height: 108px;
-  padding: 22px 20px;
+  padding: 24px 20px;
   border: 0;
   border-radius: 24px;
   color: #ffffff;
@@ -90,7 +100,7 @@ h2 {
   cursor: pointer;
   font-size: 2rem;
   font-weight: 800;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
   line-height: 1.1;
 }
 
@@ -144,16 +154,16 @@ h2 {
 
 .status {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 10px;
-  min-height: 54px;
-  padding: 13px 15px;
+  min-height: 56px;
+  padding: 14px 16px;
   border: 1px solid #cbd5e1;
   border-left-width: 6px;
   border-radius: 16px;
-  color: #334155;
-  background: #ffffff;
-  box-shadow: 0 6px 18px rgb(15 23 42 / 0.05);
+  color: var(--text-body);
+  background: var(--surface);
+  box-shadow: 0 6px 18px rgb(15 23 42 / 0.06);
   font-weight: 700;
   line-height: 1.45;
 }
@@ -162,7 +172,6 @@ h2 {
   flex: 0 0 auto;
   width: 0.72rem;
   height: 0.72rem;
-  margin-top: 0.38rem;
   border-radius: 999px;
   background: currentColor;
   content: "";
@@ -170,8 +179,8 @@ h2 {
 
 .status-neutral {
   border-color: #cbd5e1;
-  color: #334155;
-  background: #f8fafc;
+  color: var(--text-body);
+  background: var(--surface-muted);
 }
 
 .status-info {
@@ -181,13 +190,13 @@ h2 {
 }
 
 .status-success {
-  border-color: #4ade80;
+  border-color: #22c55e;
   color: #14532d;
-  background: #ecfdf3;
+  background: #ecfdf5;
 }
 
 .status-error {
-  border-color: #f87171;
+  border-color: #ef4444;
   color: #7f1d1d;
   background: #fff1f2;
 }
@@ -195,12 +204,12 @@ h2 {
 .card {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 20px;
-  border: 1px solid #d5dee9;
+  gap: 14px;
+  padding: 20px 18px;
+  border: 1px solid var(--border-subtle);
   border-radius: 20px;
-  background: #ffffff;
-  box-shadow: 0 10px 26px rgb(15 23 42 / 0.07);
+  background: var(--surface);
+  box-shadow: 0 10px 24px rgb(15 23 42 / 0.06);
 }
 
 .state-card {
@@ -231,25 +240,25 @@ h2 {
 }
 
 .latest-time {
-  padding: 15px 16px;
-  border: 1px solid #dbeafe;
+  padding: 16px;
+  border: 1px solid #bfdbfe;
   border-radius: 16px;
-  color: #0f172a;
-  background: #f8fbff;
-  font-size: 1.45rem;
+  color: var(--text-strong);
+  background: #eff6ff;
+  font-size: 1.35rem;
   font-weight: 800;
-  line-height: 1.25;
+  line-height: 1.3;
 }
 
 .empty-state {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  padding: 13px 15px;
+  padding: 14px 15px;
   border: 1px dashed #b6c3d1;
   border-radius: 16px;
-  color: #334155;
-  background: #f8fafc;
+  color: var(--text-body);
+  background: var(--surface-muted);
   line-height: 1.5;
 }
 
@@ -266,13 +275,13 @@ h2 {
 .history-list {
   display: flex;
   flex-direction: column;
-  gap: 9px;
+  gap: 8px;
   counter-reset: history;
   list-style: none;
   margin: 0;
   padding: 0;
-  color: #111827;
-  font-size: 1.05rem;
+  color: var(--text-strong);
+  font-size: 1rem;
   line-height: 1.45;
 }
 
@@ -285,6 +294,11 @@ h2 {
   border: 1px solid #e2e8f0;
   border-radius: 14px;
   background: #fbfdff;
+}
+
+.history-list li:first-child {
+  border-color: #bfdbfe;
+  background: #f8fbff;
 }
 
 .history-list li::before {
@@ -334,7 +348,7 @@ h2 {
 }
 
 .premium-link-label {
-  color: #334155;
+  color: var(--text-muted);
   font-size: 0.95rem;
 }
 
@@ -352,7 +366,7 @@ h2 {
 
 .privacy-note {
   padding: 0 4px;
-  color: #475569;
+  color: var(--text-muted);
   font-size: 0.95rem;
 }
 
