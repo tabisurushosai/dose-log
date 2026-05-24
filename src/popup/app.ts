@@ -32,6 +32,8 @@ export interface DoseLogApp {
 }
 
 const HISTORY_DISPLAY_LIMIT = 10;
+const APP_TITLE_ID = "app-title";
+const STATUS_MESSAGE_ID = "status-message";
 
 function createElement<K extends keyof HTMLElementTagNameMap>(
   tagName: K,
@@ -136,7 +138,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
   function renderStatus(container: HTMLElement, state: AppState): void {
     const statusTone = state.hasStorageError ? "error" : state.statusTone;
     const status = createElement("p", `status status-${statusTone}`, state.statusMessage);
-    status.id = "status-message";
+    status.id = STATUS_MESSAGE_ID;
     status.setAttribute("role", state.hasStorageError ? "alert" : "status");
     status.setAttribute("aria-live", state.hasStorageError ? "assertive" : "polite");
     status.setAttribute("aria-atomic", "true");
@@ -145,7 +147,9 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
 
   function renderHeader(): HTMLElement {
     const header = createElement("header", "app-header");
-    header.append(createElement("h1", undefined, t("appTitle")));
+    const title = createElement("h1", undefined, t("appTitle"));
+    title.id = APP_TITLE_ID;
+    header.append(title);
     header.append(createElement("p", "purpose", t("purposeText")));
     return header;
   }
@@ -153,6 +157,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
   function renderLoading(container: HTMLElement): void {
     syncDocumentLocale();
     container.setAttribute("aria-busy", "true");
+    container.setAttribute("aria-labelledby", APP_TITLE_ID);
     container.replaceChildren();
 
     const loadingCard = createElement("section", "card state-card");
@@ -174,13 +179,14 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     section.append(title);
 
     const latestRecord = getLatestDoseRecord(records);
-    section.append(
-      createElement(
-        "p",
-        latestRecord ? "latest-time" : "empty-state",
-        latestRecord ? formatRecordTime(latestRecord) : t("emptyLatestRecord")
-      )
+    const latestRecordText = createElement(
+      "p",
+      latestRecord ? "latest-time" : "empty-state",
+      latestRecord ? formatRecordTime(latestRecord) : t("emptyLatestRecord")
     );
+    latestRecordText.setAttribute("aria-live", "polite");
+    latestRecordText.setAttribute("aria-atomic", "true");
+    section.append(latestRecordText);
 
     container.append(section);
   }
@@ -208,7 +214,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     clearButton.type = "button";
     clearButton.disabled = records.length === 0;
     clearButton.dataset.focusKey = "clear-records";
-    clearButton.setAttribute("aria-describedby", "clear-button-description status-message");
+    clearButton.setAttribute("aria-describedby", `clear-button-description ${STATUS_MESSAGE_ID}`);
     clearButton.addEventListener("click", () => {
       void handleClearRecords();
     });
@@ -259,6 +265,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
 
     rememberFocusedAction();
     root.setAttribute("aria-busy", String(state.isBusy));
+    root.setAttribute("aria-labelledby", APP_TITLE_ID);
     root.replaceChildren();
 
     root.append(renderHeader());
@@ -268,7 +275,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     tapButton.disabled = state.isBusy;
     tapButton.dataset.focusKey = "tap-record";
     tapButton.setAttribute("aria-busy", String(state.isBusy));
-    tapButton.setAttribute("aria-describedby", "tap-button-description status-message");
+    tapButton.setAttribute("aria-describedby", `tap-button-description ${STATUS_MESSAGE_ID}`);
     tapButton.addEventListener("click", () => {
       void handleTapRecord();
     });

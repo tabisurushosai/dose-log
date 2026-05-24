@@ -1,4 +1,6 @@
 :root {
+  --focus-ring-color: #1d4ed8;
+  --focus-ring-inner: #ffffff;
   color: #0f172a;
   background: #f8fafc;
   color-scheme: light;
@@ -30,6 +32,7 @@ code {
 }
 
 button {
+  min-width: 44px;
   touch-action: manipulation;
 }
 
@@ -104,14 +107,25 @@ h2 {
 
 .tap-button:focus-visible,
 .secondary-button:focus-visible {
-  outline: 3px solid #ffffff;
+  outline: 3px solid var(--focus-ring-inner);
   outline-offset: 3px;
-  box-shadow: 0 0 0 7px #1d4ed8;
+}
+
+.tap-button:focus-visible {
+  box-shadow:
+    0 0 0 7px var(--focus-ring-color),
+    0 8px 0 #052e16,
+    0 18px 28px rgb(20 83 45 / 0.18);
+}
+
+.secondary-button:focus-visible {
+  box-shadow: 0 0 0 7px var(--focus-ring-color);
 }
 
 .tap-button:disabled,
 .secondary-button:disabled {
   cursor: not-allowed;
+  opacity: 1;
 }
 
 .tap-button:disabled {
@@ -268,6 +282,7 @@ h2 {
 
 .secondary-button {
   min-height: 56px;
+  min-width: 56px;
   padding: 14px 18px;
   border: 1px solid #64748b;
   border-radius: 14px;
