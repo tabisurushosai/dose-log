@@ -11,7 +11,7 @@
     "message": "のんだ記録"
   },
   "purposeText": {
-    "message": "ボタンを1回押した時刻だけを、この端末の Chrome のストレージに保存します。名前・量・効果は扱いません。"
+    "message": "ボタンを1回押した時刻だけを、この端末の Chrome ストレージに保存します。名前・量・効果は扱いません。"
   },
   "tapButton": {
     "message": "のんだ"
@@ -20,7 +20,7 @@
     "message": "現在の時刻を1件の記録として保存します。"
   },
   "onboardingGuideTitle": {
-    "message": "はじめての一言ガイド"
+    "message": "はじめて使うときのガイド"
   },
   "onboardingGuideCopy": {
     "message": "のんだ直後に「$BUTTON$」を1回押してください。保存されるのは時刻だけです。",
@@ -31,7 +31,7 @@
     }
   },
   "onboardingGuideAction": {
-    "message": "次にやること: 大きな「$BUTTON$」ボタンを押します。",
+    "message": "次にやること：大きな「$BUTTON$」ボタンを押します。",
     "placeholders": {
       "button": {
         "content": "$1"
@@ -53,7 +53,7 @@
     "message": "最近の記録"
   },
   "emptyHistoryRecords": {
-    "message": "履歴はまだありません。最初の記録を保存すると、最新$COUNT$件までここに並びます。",
+    "message": "履歴はまだありません。最初の記録を保存すると、最大$COUNT$件までここに並びます。",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -67,7 +67,7 @@
     "message": "この端末に保存した記録をすべて削除します。"
   },
   "confirmClear": {
-    "message": "この端末に保存した記録をすべて削除します。よろしいですか。"
+    "message": "この端末に保存した記録をすべて削除します。この操作は元に戻せません。よろしいですか。"
   },
   "loadingStatus": {
     "message": "保存済みの記録を読み込んでいます。"
@@ -84,10 +84,10 @@
     }
   },
   "savingStatus": {
-    "message": "保存しています。"
+    "message": "保存中です。"
   },
   "clearingStatus": {
-    "message": "削除しています。"
+    "message": "削除中です。"
   },
   "savedToast": {
     "message": "記録しました。"
@@ -96,13 +96,13 @@
     "message": "記録をすべて削除しました。"
   },
   "privacyNote": {
-    "message": "外部には送信しません。記録はこの端末の Chrome のストレージにのみ保存されます。"
+    "message": "外部には送信しません。記録はこの端末の Chrome ストレージにのみ保存されます。"
   },
   "premiumTitle": {
-    "message": "Premium"
+    "message": "プレミアム"
   },
   "premiumCopy": {
-    "message": "Premium は買い切り（$PRICE$）です。$DAYS$のトライアルがあり、Premium が無効な場合でも記録機能は使えます。",
+    "message": "プレミアムは買い切り（$PRICE$）です。$DAYS$のトライアルがあり、無効な場合でも記録機能は使えます。",
     "placeholders": {
       "price": {
         "content": "$1"
@@ -124,7 +124,7 @@
     "message": "トライアルは終了しました。"
   },
   "premiumPurchased": {
-    "message": "Premium は有効です。"
+    "message": "プレミアムは有効です。"
   },
   "premiumLinkLabel": {
     "message": "購入リンク（オーナー設定待ち）"

@@ -11,7 +11,7 @@
     "message": "Dose Log"
   },
   "purposeText": {
-    "message": "Saves only the time you tap the button in Chrome storage on this device. Names, dose amounts, and effects are not stored."
+    "message": "Records only the time you tap the button in Chrome storage on this device. Names, dose amounts, and effects are not stored."
   },
   "tapButton": {
     "message": "Taken"
@@ -20,7 +20,7 @@
     "message": "Save the current time as one record."
   },
   "onboardingGuideTitle": {
-    "message": "First-time guide"
+    "message": "Getting started"
   },
   "onboardingGuideCopy": {
     "message": "Right after taking a dose, tap \"$BUTTON$\" once. Only the time is saved.",
@@ -31,7 +31,7 @@
     }
   },
   "onboardingGuideAction": {
-    "message": "Next step: tap the large \"$BUTTON$\" button.",
+    "message": "Next step: tap the large \"$BUTTON$\" button once.",
     "placeholders": {
       "button": {
         "content": "$1"
@@ -53,7 +53,7 @@
     "message": "Recent records"
   },
   "emptyHistoryRecords": {
-    "message": "No history yet. After your first record is saved, up to $COUNT$ recent records will appear here.",
+    "message": "No history yet. After your first record is saved, up to $COUNT$ records will appear here.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -67,7 +67,7 @@
     "message": "Deletes all records saved on this device."
   },
   "confirmClear": {
-    "message": "Delete all records saved on this device?"
+    "message": "Delete all records saved on this device? This cannot be undone."
   },
   "loadingStatus": {
     "message": "Loading saved records."
@@ -76,7 +76,7 @@
     "message": "Ready to record."
   },
   "firstRunGuide": {
-    "message": "First time: start with the large \"$BUTTON$\" button.",
+    "message": "To start, tap the large \"$BUTTON$\" button.",
     "placeholders": {
       "button": {
         "content": "$1"
@@ -84,10 +84,10 @@
     }
   },
   "savingStatus": {
-    "message": "Saving."
+    "message": "Saving..."
   },
   "clearingStatus": {
-    "message": "Deleting records."
+    "message": "Deleting records..."
   },
   "savedToast": {
     "message": "Record saved."
@@ -96,13 +96,13 @@
     "message": "All records deleted."
   },
   "privacyNote": {
-    "message": "No data is sent outside this extension. Records are stored only in Chrome storage on this device."
+    "message": "No data leaves this extension. Records are stored only in Chrome storage on this device."
   },
   "premiumTitle": {
     "message": "Premium"
   },
   "premiumCopy": {
-    "message": "Premium is a one-time purchase ($PRICE$) and includes a $DAYS$ trial. Recording still works when Premium is inactive.",
+    "message": "Premium is a one-time purchase ($PRICE$) with a $DAYS$ trial. Recording still works without Premium.",
     "placeholders": {
       "price": {
         "content": "$1"
@@ -113,7 +113,7 @@
     }
   },
   "premiumTrialActive": {
-    "message": "Trial active: $DAYS$ remaining.",
+    "message": "$DAYS$ left in trial.",
     "placeholders": {
       "days": {
         "content": "$1"

@@ -73,16 +73,20 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
   const locale = dependencies.locale || navigator.language || undefined;
   const isJapaneseLocale = locale?.toLowerCase().startsWith("ja") ?? false;
   const dateFormatter = new Intl.DateTimeFormat(locale, {
-    dateStyle: "medium",
-    timeStyle: "short"
+    year: "numeric",
+    month: isJapaneseLocale ? "long" : "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
   });
   const numberFormatter = new Intl.NumberFormat(locale, {
+    useGrouping: true,
     maximumFractionDigits: 0
   });
   const usdFormatter = new Intl.NumberFormat(locale, {
     style: "currency",
     currency: "USD",
-    currencyDisplay: "narrowSymbol",
+    currencyDisplay: isJapaneseLocale ? "name" : "narrowSymbol",
     maximumFractionDigits: 0
   });
   let appState: AppState | null = null;
