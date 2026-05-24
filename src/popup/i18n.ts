@@ -28,7 +28,7 @@ const fallbackMessages = {
   premiumPurchased: "Premium は有効です。",
   premiumLinkLabel: "購入リンク（オーナー設定待ち）",
   storageError: "保存データの読み書きに失敗しました。"
-} as const;
+} as const satisfies Record<string, string>;
 
 export type TranslationSubstitutions = string | string[];
 export type MessageKey = keyof typeof fallbackMessages;
@@ -50,6 +50,6 @@ export function createTranslator(resolveMessage?: Translator): Translator {
       return localized;
     }
 
-    return applyFallbackSubstitutions(fallbackMessages[key] ?? key, substitutions);
+    return applyFallbackSubstitutions(fallbackMessages[key], substitutions);
   };
 }
