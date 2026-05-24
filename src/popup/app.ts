@@ -97,6 +97,12 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     return usdFormatter.format(value);
   }
 
+  function createRecordTime(record: DoseRecord): HTMLTimeElement {
+    const time = createElement("time", undefined, formatRecordTime(record));
+    time.dateTime = record.takenAtIso;
+    return time;
+  }
+
   function rememberFocusedAction(): void {
     if (!root) {
       return;
@@ -182,10 +188,13 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     const latestRecordText = createElement(
       "p",
       latestRecord ? "latest-time" : "empty-state",
-      latestRecord ? formatRecordTime(latestRecord) : t("emptyLatestRecord")
+      latestRecord ? undefined : t("emptyLatestRecord")
     );
     latestRecordText.setAttribute("aria-live", "polite");
     latestRecordText.setAttribute("aria-atomic", "true");
+    if (latestRecord) {
+      latestRecordText.append(createRecordTime(latestRecord));
+    }
     section.append(latestRecordText);
 
     container.append(section);
@@ -222,7 +231,8 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     } else {
       const list = createElement("ol", "history-list");
       records.slice(0, HISTORY_DISPLAY_LIMIT).forEach((record) => {
-        const item = createElement("li", undefined, formatRecordTime(record));
+        const item = createElement("li");
+        item.append(createRecordTime(record));
         list.append(item);
       });
       section.append(list);
