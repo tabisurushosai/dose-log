@@ -7,11 +7,14 @@ path for future iOS/Android app shells.
 
 - `src/core/` is pure TypeScript domain logic. Do not import or reference
   `chrome.*`, DOM APIs, network APIs, or platform SDKs from this directory.
+  `npm run typecheck:core` checks this directory without DOM or Chrome ambient
+  types so portability regressions fail during the normal build.
 - `src/storage/storageAdapter.ts` defines the platform-neutral key/value storage
-  interface. New platforms should implement this interface instead of changing
-  core logic.
+  interface. It accepts string keys and unknown persisted values only; app-level
+  key names and normalization stay outside the platform adapter.
 - `src/storage/appStorage.ts` maps persisted values to the app domain and keeps
-  the existing storage keys and normalization rules in one place.
+  the existing storage keys (`APP_STORAGE_KEYS`) and normalization rules in one
+  place.
 - `src/storage/chromeStorageAdapter.ts` is the Chrome extension implementation.
   Keep Chrome-specific types and `chrome.*` calls in Chrome entry points or
   Chrome adapters only.
