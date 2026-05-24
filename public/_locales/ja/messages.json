@@ -20,10 +20,18 @@
     "message": "現在の時刻を1件の記録として保存します。"
   },
   "onboardingGuideTitle": {
-    "message": "初回ガイド"
+    "message": "はじめての一言ガイド"
   },
   "onboardingGuideCopy": {
-    "message": "のんだ直後に「$BUTTON$」を1回押すだけで、その時刻を残せます。",
+    "message": "のんだ直後に「$BUTTON$」を1回押してください。保存されるのは時刻だけです。",
+    "placeholders": {
+      "button": {
+        "content": "$1"
+      }
+    }
+  },
+  "onboardingGuideAction": {
+    "message": "次にやること: 大きな「$BUTTON$」ボタンを押します。",
     "placeholders": {
       "button": {
         "content": "$1"
@@ -34,7 +42,7 @@
     "message": "直近の記録"
   },
   "emptyLatestRecord": {
-    "message": "まだ記録はありません。上の「$BUTTON$」を押すと、直近の時刻がここに表示されます。",
+    "message": "ここには最後に保存した時刻が表示されます。まずは大きな「$BUTTON$」ボタンを1回押してください。",
     "placeholders": {
       "button": {
         "content": "$1"
@@ -45,13 +53,10 @@
     "message": "最近の記録"
   },
   "emptyHistoryRecords": {
-    "message": "まだ履歴はありません。上の「$BUTTON$」で最初に記録すると、最新$COUNT$件がここに表示されます。",
+    "message": "履歴はまだありません。最初の記録を保存すると、最新$COUNT$件までここに並びます。",
     "placeholders": {
       "count": {
         "content": "$1"
-      },
-      "button": {
-        "content": "$2"
       }
     }
   },
@@ -71,7 +76,7 @@
     "message": "記録できます。"
   },
   "firstRunGuide": {
-    "message": "初回は、のんだ直後に「$BUTTON$」を押してください。",
+    "message": "初回は大きな「$BUTTON$」ボタンから記録を始めます。",
     "placeholders": {
       "button": {
         "content": "$1"
