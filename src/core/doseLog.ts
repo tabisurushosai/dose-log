@@ -1,3 +1,5 @@
+import { isFiniteDateString } from "./dateString";
+
 export interface DoseRecord {
   id: string;
   takenAtIso: string;
@@ -32,7 +34,8 @@ export function getLatestDoseRecord(records: readonly DoseRecord[]): DoseRecord 
     return null;
   }
 
-  return [...records].sort(compareDoseRecordsByTakenAtDesc)[0];
+  const [latestRecord] = [...records].sort(compareDoseRecordsByTakenAtDesc);
+  return latestRecord ?? null;
 }
 
 export function normalizeDoseRecords(records: unknown): DoseRecord[] {
@@ -47,9 +50,8 @@ export function normalizeDoseRecords(records: unknown): DoseRecord[] {
       }
 
       const candidate = record as Record<string, unknown>;
-      return typeof candidate.id === "string" && typeof candidate.takenAtIso === "string";
+      return typeof candidate["id"] === "string" && isFiniteDateString(candidate["takenAtIso"]);
     })
-    .filter((record) => Number.isFinite(Date.parse(record.takenAtIso)))
     .sort(compareDoseRecordsByTakenAtDesc)
     .slice(0, MAX_RECORDS);
 }
