@@ -1,4 +1,6 @@
-import type { StorageAdapter, StorageKey, StorageSnapshot, StorageValue } from "./storageAdapter";
+import type { StorageAdapter, StorageKey, StorageValue } from "./storageAdapter";
+
+type ChromeStorageItems = Partial<Record<StorageKey, StorageValue>>;
 
 function readFromChromeStorage(key: StorageKey): Promise<StorageValue | undefined> {
   return new Promise((resolve, reject) => {
@@ -9,12 +11,12 @@ function readFromChromeStorage(key: StorageKey): Promise<StorageValue | undefine
         return;
       }
 
-      resolve((items as StorageSnapshot)[key]);
+      resolve((items as ChromeStorageItems)[key]);
     });
   });
 }
 
-function writeToChromeStorage(values: StorageSnapshot): Promise<void> {
+function writeToChromeStorage(values: ChromeStorageItems): Promise<void> {
   return new Promise((resolve, reject) => {
     chrome.storage.local.set(values, () => {
       const error = chrome.runtime.lastError;
