@@ -41,6 +41,7 @@ code {
 }
 
 button {
+  min-height: 44px;
   min-width: 44px;
   touch-action: manipulation;
 }
@@ -387,5 +388,24 @@ h2 {
   .secondary-button:focus-visible {
     outline: 3px solid Highlight;
     box-shadow: none;
+  }
+}
+
+@supports not selector(:focus-visible) {
+  .tap-button:focus,
+  .secondary-button:focus {
+    outline: 3px solid var(--focus-ring-inner);
+    outline-offset: 3px;
+  }
+
+  .tap-button:focus {
+    box-shadow:
+      0 0 0 7px var(--focus-ring-color),
+      0 8px 0 #052e16,
+      0 18px 28px rgb(20 83 45 / 0.18);
+  }
+
+  .secondary-button:focus {
+    box-shadow: 0 0 0 7px var(--focus-ring-color);
   }
 }
