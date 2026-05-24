@@ -10,11 +10,13 @@ path for future iOS/Android app shells.
   `npm run typecheck:core` checks this directory without DOM or Chrome ambient
   types so portability regressions fail during the normal build.
 - `src/storage/storageAdapter.ts` defines the platform-neutral key/value storage
-  interface. It accepts string keys and unknown persisted values only; app-level
-  key names and normalization stay outside the platform adapter.
+  port. It only exposes `read(key)` and `write(key, value)` for string keys and
+  `unknown` values; app-level key names and normalization stay outside the
+  platform adapter.
 - `src/storage/appStorage.ts` maps persisted values to the app domain and keeps
   the existing storage keys (`APP_STORAGE_KEYS`) and normalization rules in one
-  place.
+  place. `npm run typecheck:portable` checks `src/core/`, `storageAdapter`, and
+  `appStorage` without DOM or Chrome ambient types.
 - `src/storage/chromeStorageAdapter.ts` is the Chrome extension implementation.
   Keep Chrome-specific types and `chrome.*` calls in Chrome entry points or
   Chrome adapters only.
@@ -41,8 +43,9 @@ When adding an iOS or Android shell, keep the shell thin:
    code needs `chrome.*`, DOM, network, filesystem, or native SDK APIs, it does
    not belong in `src/core/`.
 2. Implement the small `StorageAdapter` contract for the platform. The adapter
-   should only read and write raw `unknown` values by string key; keep app keys,
-   normalization, and compatibility rules in `src/storage/appStorage.ts`.
+   should only implement `read(key)` and `write(key, value)` for raw `unknown`
+   values by string key; keep app keys, normalization, and compatibility rules
+   in `src/storage/appStorage.ts`.
 3. Inject platform services from the entry point, the same way the Chrome popup
    passes storage, translation, confirmation, and locale dependencies into
    `createDoseLogApp(...)`.

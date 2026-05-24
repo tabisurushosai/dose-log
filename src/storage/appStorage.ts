@@ -17,15 +17,15 @@ export interface AppStorage {
 export function createAppStorage(adapter: StorageAdapter): AppStorage {
   return {
     async getDoseRecords(): Promise<DoseRecord[]> {
-      return normalizeDoseRecords(await adapter.get(APP_STORAGE_KEYS.doseRecords));
+      return normalizeDoseRecords(await adapter.read(APP_STORAGE_KEYS.doseRecords));
     },
 
     async setDoseRecords(records: readonly DoseRecord[]): Promise<void> {
-      await adapter.set(APP_STORAGE_KEYS.doseRecords, normalizeDoseRecords(records));
+      await adapter.write(APP_STORAGE_KEYS.doseRecords, normalizeDoseRecords(records));
     },
 
     async getPremiumState(): Promise<PremiumState | null> {
-      const state = await adapter.get(APP_STORAGE_KEYS.premiumState);
+      const state = await adapter.read(APP_STORAGE_KEYS.premiumState);
       if (state === undefined) {
         return null;
       }
@@ -34,7 +34,7 @@ export function createAppStorage(adapter: StorageAdapter): AppStorage {
     },
 
     async setPremiumState(state: PremiumState): Promise<void> {
-      await adapter.set(APP_STORAGE_KEYS.premiumState, normalizePremiumState(state));
+      await adapter.write(APP_STORAGE_KEYS.premiumState, normalizePremiumState(state));
     }
   };
 }
