@@ -36,6 +36,8 @@ export interface DoseLogApp {
 const HISTORY_DISPLAY_LIMIT = 10;
 const APP_TITLE_ID = "app-title";
 const STATUS_MESSAGE_ID = "status-message";
+const LATEST_RECORD_CONTENT_ID = "latest-record-content";
+const HISTORY_CONTENT_ID = "history-content";
 const ONBOARDING_GUIDE_COPY_ID = "onboarding-guide-copy";
 const ONBOARDING_GUIDE_ACTION_ID = "onboarding-guide-action";
 
@@ -216,6 +218,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
       latestRecord ? "latest-time" : "empty-state",
       latestRecord ? undefined : t("emptyLatestRecord", tapButtonLabel)
     );
+    latestRecordText.id = LATEST_RECORD_CONTENT_ID;
     latestRecordText.setAttribute("aria-live", "polite");
     latestRecordText.setAttribute("aria-atomic", "true");
     if (latestRecord) {
@@ -255,11 +258,16 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     section.append(title);
 
     if (records.length === 0) {
-      section.append(
-        createElement("p", "empty-state", t("emptyHistoryRecords", formatNumber(HISTORY_DISPLAY_LIMIT)))
+      const emptyHistory = createElement(
+        "p",
+        "empty-state",
+        t("emptyHistoryRecords", formatNumber(HISTORY_DISPLAY_LIMIT))
       );
+      emptyHistory.id = HISTORY_CONTENT_ID;
+      section.append(emptyHistory);
     } else {
       const list = createElement("ol", "history-list");
+      list.id = HISTORY_CONTENT_ID;
       records.slice(0, HISTORY_DISPLAY_LIMIT).forEach((record) => {
         const item = createElement("li");
         item.append(createRecordTime(record));
@@ -272,6 +280,10 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     clearButton.type = "button";
     clearButton.disabled = records.length === 0;
     clearButton.dataset["focusKey"] = "clear-records";
+    clearButton.setAttribute(
+      "aria-controls",
+      `${STATUS_MESSAGE_ID} ${LATEST_RECORD_CONTENT_ID} ${HISTORY_CONTENT_ID}`
+    );
     clearButton.setAttribute("aria-describedby", `clear-button-description ${STATUS_MESSAGE_ID}`);
     clearButton.addEventListener("click", () => {
       void handleClearRecords();
@@ -336,6 +348,10 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     tapButton.disabled = state.isBusy;
     tapButton.dataset["focusKey"] = "tap-record";
     tapButton.setAttribute("aria-busy", String(state.isBusy));
+    tapButton.setAttribute(
+      "aria-controls",
+      `${STATUS_MESSAGE_ID} ${LATEST_RECORD_CONTENT_ID} ${HISTORY_CONTENT_ID}`
+    );
     const tapButtonDescriptionIds = ["tap-button-description", STATUS_MESSAGE_ID];
     if (state.records.length === 0 && !state.hasStorageError) {
       tapButtonDescriptionIds.splice(1, 0, ONBOARDING_GUIDE_COPY_ID, ONBOARDING_GUIDE_ACTION_ID);

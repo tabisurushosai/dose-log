@@ -301,23 +301,16 @@ h2 {
 }
 
 .history-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  counter-reset: history;
-  list-style: none;
+  list-style: decimal;
   margin: 0;
-  padding: 0;
+  padding-inline-start: 2.2rem;
   color: var(--text-strong);
   font-size: 1rem;
   line-height: 1.45;
 }
 
 .history-list li {
-  display: grid;
-  grid-template-columns: 2rem 1fr;
-  align-items: center;
-  gap: 10px;
+  margin-block-start: 8px;
   padding: 12px 13px;
   border: 1px solid #e2e8f0;
   border-radius: 14px;
@@ -325,21 +318,13 @@ h2 {
 }
 
 .history-list li:first-child {
+  margin-block-start: 0;
   border-color: #bfdbfe;
   background: #f8fbff;
 }
 
-.history-list li::before {
-  display: inline-grid;
-  place-items: center;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 999px;
+.history-list li::marker {
   color: #0f172a;
-  background: var(--surface-subtle);
-  counter-increment: history;
-  content: counter(history);
-  font-size: 0.9rem;
   font-weight: 700;
 }
 
@@ -420,6 +405,12 @@ h2 {
   .secondary-button:focus-visible {
     outline: 3px solid Highlight;
     box-shadow: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tap-button:not(:disabled):active {
+    transform: none;
   }
 }
 
