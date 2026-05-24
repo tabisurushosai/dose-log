@@ -19,17 +19,23 @@
   "tapButtonDescription": {
     "message": "Save the current time as one record."
   },
+  "onboardingGuideTitle": {
+    "message": "How to start"
+  },
+  "onboardingGuideCopy": {
+    "message": "Right after taking a dose, tap the button above once to save the latest time and add it to recent records."
+  },
   "lastRecordTitle": {
     "message": "Latest record"
   },
   "emptyLatestRecord": {
-    "message": "No records yet. After taking a dose, tap the button above and the time will appear here."
+    "message": "After your first record, the latest time will appear here."
   },
   "historyTitle": {
     "message": "Recent records"
   },
   "emptyHistoryRecords": {
-    "message": "After you record, your $COUNT$ most recent records will appear here.",
+    "message": "After recording, your $COUNT$ most recent records will appear here.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -52,7 +58,7 @@
     "message": "Ready to record."
   },
   "firstRunGuide": {
-    "message": "First time here? After taking a dose, tap the large button once."
+    "message": "To start, tap the large button once right after taking a dose."
   },
   "savingStatus": {
     "message": "Saving..."
