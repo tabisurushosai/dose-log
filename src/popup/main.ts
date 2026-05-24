@@ -4,8 +4,8 @@ import { createDoseLogApp } from "./app";
 import { createTranslator } from "./i18n";
 import "./styles.css";
 
-function getSupportedLocale(uiLanguage: string): "ja" | "en" {
-  return uiLanguage.toLowerCase().startsWith("en") ? "en" : "ja";
+function getSupportedLocale(uiLanguage: string): "ja-JP" | "en-US" {
+  return uiLanguage.toLowerCase().startsWith("en") ? "en-US" : "ja-JP";
 }
 
 const app = createDoseLogApp({
