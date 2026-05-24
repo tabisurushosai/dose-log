@@ -66,13 +66,20 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
   const root = dependencies.root ?? document.querySelector<HTMLElement>("#app");
   const locale = dependencies.locale || navigator.language || undefined;
   const dateFormatter = new Intl.DateTimeFormat(locale, {
-    dateStyle: "long",
-    timeStyle: "short"
+    weekday: "short",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit"
   });
-  const numberFormatter = new Intl.NumberFormat(locale);
+  const numberFormatter = new Intl.NumberFormat(locale, {
+    maximumFractionDigits: 0
+  });
   const usdFormatter = new Intl.NumberFormat(locale, {
     style: "currency",
     currency: "USD",
+    currencyDisplay: "narrowSymbol",
     maximumFractionDigits: 0
   });
   let appState: AppState | null = null;

@@ -4,26 +4,26 @@
     "description": "Extension name"
   },
   "extensionDescription": {
-    "message": "Records only the time of a single tap for a taken dose. It does not handle names, dosage, or effects.",
+    "message": "Records only the time you tap after taking a dose. It does not handle names, dosage, or effects.",
     "description": "Chrome Web Store description"
   },
   "appTitle": {
     "message": "Dose Log"
   },
   "purposeText": {
-    "message": "This saves only the time of a single tap to this device's Chrome storage. It does not handle names, dosage, or effects."
+    "message": "This saves only the time you tap the button to this device's Chrome storage. It does not handle names, dosage, or effects."
   },
   "tapButton": {
     "message": "Taken"
   },
   "tapButtonDescription": {
-    "message": "Save the current time as one record."
+    "message": "Save the current time as a record."
   },
   "onboardingGuideTitle": {
-    "message": "How to start"
+    "message": "Getting started"
   },
   "onboardingGuideCopy": {
-    "message": "Right after taking a dose, tap the button above once to save the latest time and add it to recent records."
+    "message": "Right after taking a dose, tap the button above once to save that time as the latest record and show it in recent records."
   },
   "lastRecordTitle": {
     "message": "Latest record"
@@ -35,7 +35,7 @@
     "message": "Recent records"
   },
   "emptyHistoryRecords": {
-    "message": "After recording, your $COUNT$ most recent records will appear here.",
+    "message": "After you record, your $COUNT$ most recent records will appear here.",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -73,13 +73,13 @@
     "message": "Records deleted."
   },
   "privacyNote": {
-    "message": "Nothing is sent outside the extension. Storage is Chrome storage only."
+    "message": "Nothing is sent outside this extension. Records are stored only in Chrome storage on this device."
   },
   "premiumTitle": {
     "message": "Premium"
   },
   "premiumCopy": {
-    "message": "Premium is a $PRICE$ one-time purchase with a $DAYS$-day trial. The recording feature works even when Premium is inactive.",
+    "message": "Premium is a one-time purchase of $PRICE$ and includes a $DAYS$-day trial. Recording works even when Premium is inactive.",
     "placeholders": {
       "price": {
         "content": "$1"
@@ -107,6 +107,6 @@
     "message": "Purchase link (owner setup pending)"
   },
   "storageError": {
-    "message": "Could not read or write storage."
+    "message": "Could not read or write saved data."
   }
 }

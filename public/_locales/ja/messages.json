@@ -11,19 +11,19 @@
     "message": "のんだ記録"
   },
   "purposeText": {
-    "message": "1回押した時刻だけを、この端末の Chrome storage に保存します。名前・量・効果は扱いません。"
+    "message": "ボタンを1回押した時刻だけを、この端末の Chrome storage に保存します。名前・量・効果は扱いません。"
   },
   "tapButton": {
     "message": "のんだ"
   },
   "tapButtonDescription": {
-    "message": "現在の時刻を1件の記録として保存します。"
+    "message": "今の時刻を1件の記録として保存します。"
   },
   "onboardingGuideTitle": {
     "message": "はじめ方"
   },
   "onboardingGuideCopy": {
-    "message": "のんだ直後に上のボタンを1回押すだけで、直近の時刻と最近の記録に残ります。"
+    "message": "のんだ直後に上のボタンを1回押すだけで、その時刻が直近の記録と最近の記録に表示されます。"
   },
   "lastRecordTitle": {
     "message": "直近の記録"
@@ -35,7 +35,7 @@
     "message": "最近の記録"
   },
   "emptyHistoryRecords": {
-    "message": "記録後、最近の$COUNT$件がここに並びます。",
+    "message": "記録すると、最新の$COUNT$件がここに表示されます。",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -49,7 +49,7 @@
     "message": "この端末に保存した記録をすべて削除します。"
   },
   "confirmClear": {
-    "message": "この端末に保存した記録をすべて消します。よろしいですか。"
+    "message": "この端末に保存した記録をすべて削除します。よろしいですか。"
   },
   "loadingStatus": {
     "message": "保存済みの記録を読み込んでいます。"
@@ -70,10 +70,10 @@
     "message": "記録しました。"
   },
   "clearedToast": {
-    "message": "記録を消しました。"
+    "message": "記録をすべて削除しました。"
   },
   "privacyNote": {
-    "message": "外部送信はありません。保存先は Chrome storage のみです。"
+    "message": "外部送信はありません。保存先はこの端末の Chrome storage のみです。"
   },
   "premiumTitle": {
     "message": "Premium"
@@ -104,9 +104,9 @@
     "message": "Premium は有効です。"
   },
   "premiumLinkLabel": {
-    "message": "購入リンク（オーナー設定待ち）"
+    "message": "購入リンク（オーナーによる設定待ち）"
   },
   "storageError": {
-    "message": "保存の読み書きに失敗しました。"
+    "message": "保存データの読み書きに失敗しました。"
   }
 }
