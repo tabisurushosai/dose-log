@@ -66,7 +66,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
   const root = dependencies.root ?? document.querySelector<HTMLElement>("#app");
   const locale = dependencies.locale || navigator.language || undefined;
   const dateFormatter = new Intl.DateTimeFormat(locale, {
-    dateStyle: "medium",
+    dateStyle: "long",
     timeStyle: "short"
   });
   const numberFormatter = new Intl.NumberFormat(locale);
@@ -200,7 +200,9 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     section.append(title);
 
     if (records.length === 0) {
-      section.append(createElement("p", "empty-state", t("emptyHistoryRecords")));
+      section.append(
+        createElement("p", "empty-state", t("emptyHistoryRecords", formatNumber(HISTORY_DISPLAY_LIMIT)))
+      );
     } else {
       const list = createElement("ol", "history-list");
       records.slice(0, HISTORY_DISPLAY_LIMIT).forEach((record) => {

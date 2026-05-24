@@ -4,14 +4,14 @@
     "description": "Extension name"
   },
   "extensionDescription": {
-    "message": "Records only the timestamp of a single tap that a dose was taken. It does not handle names, dosage, or effects.",
+    "message": "Records only the time of a single tap for a taken dose. It does not handle names, dosage, or effects.",
     "description": "Chrome Web Store description"
   },
   "appTitle": {
     "message": "Dose Log"
   },
   "purposeText": {
-    "message": "This saves only the time you tap once to this device's Chrome storage. It does not handle names, dosage, or effects."
+    "message": "This saves only the time of a single tap to this device's Chrome storage. It does not handle names, dosage, or effects."
   },
   "tapButton": {
     "message": "Taken"
@@ -29,7 +29,12 @@
     "message": "Recent records"
   },
   "emptyHistoryRecords": {
-    "message": "After you record, your 10 most recent records will appear here."
+    "message": "After you record, your $COUNT$ most recent records will appear here.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "clearButton": {
     "message": "Delete all records"
@@ -68,7 +73,7 @@
     "message": "Premium"
   },
   "premiumCopy": {
-    "message": "$PRICE$ one-time purchase with a $DAYS$-day trial framework. The recording feature works even when Premium is inactive.",
+    "message": "Premium is a $PRICE$ one-time purchase with a $DAYS$-day trial. The recording feature works even when Premium is inactive.",
     "placeholders": {
       "price": {
         "content": "$1"
@@ -79,7 +84,7 @@
     }
   },
   "premiumTrialActive": {
-    "message": "Trial active ($DAYS$ days left)",
+    "message": "Trial active. Days remaining: $DAYS$.",
     "placeholders": {
       "days": {
         "content": "$1"

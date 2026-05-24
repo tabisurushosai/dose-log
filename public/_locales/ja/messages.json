@@ -29,7 +29,12 @@
     "message": "最近の記録"
   },
   "emptyHistoryRecords": {
-    "message": "記録すると、最近の10件がここに並びます。"
+    "message": "記録すると、最近の$COUNT$件がここに並びます。",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
   },
   "clearButton": {
     "message": "記録をすべて消す"
@@ -68,7 +73,7 @@
     "message": "Premium"
   },
   "premiumCopy": {
-    "message": "$PRICE$ 買い切り・$DAYS$日間トライアルの枠組みです。Premium が無効でも記録機能は使えます。",
+    "message": "Premium は $PRICE$ の買い切りで、$DAYS$日間のトライアルがあります。Premium が無効でも記録機能は使えます。",
     "placeholders": {
       "price": {
         "content": "$1"
@@ -79,7 +84,7 @@
     }
   },
   "premiumTrialActive": {
-    "message": "トライアル中（残り $DAYS$ 日）",
+    "message": "トライアル中（残り$DAYS$日）",
     "placeholders": {
       "days": {
         "content": "$1"
