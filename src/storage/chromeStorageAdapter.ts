@@ -1,8 +1,8 @@
-import type { StorageAdapter, StorageKey } from "./storageAdapter";
+import type { StorageAdapter } from "./storageAdapter";
 
 type StoredValues = Record<string, unknown>;
 
-function getFromChromeStorage(keys: StorageKey[]): Promise<StoredValues> {
+function getFromChromeStorage(keys: string[]): Promise<StoredValues> {
   return new Promise((resolve, reject) => {
     chrome.storage.local.get(keys, (items) => {
       const error = chrome.runtime.lastError;
@@ -32,12 +32,12 @@ function setInChromeStorage(values: StoredValues): Promise<void> {
 
 export function createChromeStorageAdapter(): StorageAdapter {
   return {
-    async get<TValue = unknown>(key: StorageKey): Promise<TValue | undefined> {
+    async get<TValue = unknown>(key: string): Promise<TValue | undefined> {
       const items = await getFromChromeStorage([key]);
       return items[key] as TValue | undefined;
     },
 
-    async set<TValue>(key: StorageKey, value: TValue): Promise<void> {
+    async set<TValue>(key: string, value: TValue): Promise<void> {
       await setInChromeStorage({
         [key]: value
       });
