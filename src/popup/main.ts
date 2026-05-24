@@ -1,5 +1,3 @@
-/// <reference types="chrome" />
-
 import { createChromeStorageAdapter } from "../storage/chromeStorageAdapter";
 import { createAppStorage } from "../storage/appStorage";
 import { createDoseLogApp } from "./app";

@@ -5,6 +5,10 @@ export interface DoseRecord {
 
 export const MAX_RECORDS = 50;
 
+function compareDoseRecordsByTakenAtDesc(left: DoseRecord, right: DoseRecord): number {
+  return Date.parse(right.takenAtIso) - Date.parse(left.takenAtIso);
+}
+
 export function createDoseRecord(now: Date = new Date()): DoseRecord {
   return {
     id: `tap-${now.getTime()}-${Math.random().toString(36).slice(2, 8)}`,
@@ -19,7 +23,7 @@ export function addDoseRecord(
 ): DoseRecord[] {
   return [record, ...existingRecords]
     .filter((item, index, list) => list.findIndex((candidate) => candidate.id === item.id) === index)
-    .sort((left, right) => Date.parse(right.takenAtIso) - Date.parse(left.takenAtIso))
+    .sort(compareDoseRecordsByTakenAtDesc)
     .slice(0, maxRecords);
 }
 
@@ -28,7 +32,7 @@ export function getLatestDoseRecord(records: readonly DoseRecord[]): DoseRecord 
     return null;
   }
 
-  return [...records].sort((left, right) => Date.parse(right.takenAtIso) - Date.parse(left.takenAtIso))[0];
+  return [...records].sort(compareDoseRecordsByTakenAtDesc)[0];
 }
 
 export function normalizeDoseRecords(records: unknown): DoseRecord[] {
@@ -42,10 +46,10 @@ export function normalizeDoseRecords(records: unknown): DoseRecord[] {
         return false;
       }
 
-      const candidate = record as Partial<DoseRecord>;
+      const candidate = record as Record<string, unknown>;
       return typeof candidate.id === "string" && typeof candidate.takenAtIso === "string";
     })
     .filter((record) => Number.isFinite(Date.parse(record.takenAtIso)))
-    .sort((left, right) => Date.parse(right.takenAtIso) - Date.parse(left.takenAtIso))
+    .sort(compareDoseRecordsByTakenAtDesc)
     .slice(0, MAX_RECORDS);
 }

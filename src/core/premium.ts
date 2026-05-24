@@ -26,7 +26,7 @@ export function normalizePremiumState(state: unknown, now: Date = new Date()): P
     return createInitialPremiumState(now);
   }
 
-  const candidate = state as Partial<PremiumState>;
+  const candidate = state as Record<string, unknown>;
   const firstLaunchAtIso =
     typeof candidate.firstLaunchAtIso === "string" && Number.isFinite(Date.parse(candidate.firstLaunchAtIso))
       ? candidate.firstLaunchAtIso

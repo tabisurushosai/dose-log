@@ -31,6 +31,8 @@ export interface DoseLogApp {
   init(): Promise<void>;
 }
 
+const HISTORY_DISPLAY_LIMIT = 10;
+
 function createElement<K extends keyof HTMLElementTagNameMap>(
   tagName: K,
   className?: string,
@@ -141,14 +143,17 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     container.append(status);
   }
 
+  function renderHeader(): HTMLElement {
+    const header = createElement("header", "app-header");
+    header.append(createElement("h1", undefined, t("appTitle")));
+    header.append(createElement("p", "purpose", t("purposeText")));
+    return header;
+  }
+
   function renderLoading(container: HTMLElement): void {
     syncDocumentLocale();
     container.setAttribute("aria-busy", "true");
     container.replaceChildren();
-
-    const header = createElement("header", "app-header");
-    header.append(createElement("h1", undefined, t("appTitle")));
-    header.append(createElement("p", "purpose", t("purposeText")));
 
     const loadingCard = createElement("section", "card state-card");
     const loadingStatus = createElement("p", "status status-info", t("loadingStatus"));
@@ -157,7 +162,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     loadingStatus.setAttribute("aria-atomic", "true");
     loadingCard.append(loadingStatus);
 
-    container.append(header, loadingCard);
+    container.append(renderHeader(), loadingCard);
   }
 
   function renderLatestRecord(container: HTMLElement, records: readonly DoseRecord[]): void {
@@ -192,7 +197,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
       section.append(createElement("p", "empty-state", t("emptyHistoryRecords")));
     } else {
       const list = createElement("ol", "history-list");
-      records.slice(0, 10).forEach((record) => {
+      records.slice(0, HISTORY_DISPLAY_LIMIT).forEach((record) => {
         const item = createElement("li", undefined, formatRecordTime(record));
         list.append(item);
       });
@@ -204,7 +209,9 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     clearButton.disabled = records.length === 0;
     clearButton.dataset.focusKey = "clear-records";
     clearButton.setAttribute("aria-describedby", "clear-button-description status-message");
-    clearButton.addEventListener("click", handleClearRecords);
+    clearButton.addEventListener("click", () => {
+      void handleClearRecords();
+    });
 
     const clearButtonDescription = createElement("p", "sr-only", t("clearButtonDescription"));
     clearButtonDescription.id = "clear-button-description";
@@ -254,10 +261,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     root.setAttribute("aria-busy", String(state.isBusy));
     root.replaceChildren();
 
-    const header = createElement("header", "app-header");
-    header.append(createElement("h1", undefined, t("appTitle")));
-    header.append(createElement("p", "purpose", t("purposeText")));
-    root.append(header);
+    root.append(renderHeader());
 
     const tapButton = createElement("button", "tap-button", t("tapButton"));
     tapButton.type = "button";
@@ -265,7 +269,9 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     tapButton.dataset.focusKey = "tap-record";
     tapButton.setAttribute("aria-busy", String(state.isBusy));
     tapButton.setAttribute("aria-describedby", "tap-button-description status-message");
-    tapButton.addEventListener("click", handleTapRecord);
+    tapButton.addEventListener("click", () => {
+      void handleTapRecord();
+    });
     const tapButtonDescription = createElement("p", "sr-only", t("tapButtonDescription"));
     tapButtonDescription.id = "tap-button-description";
     root.append(tapButton, tapButtonDescription);
@@ -278,7 +284,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     restoreFocusedAction();
   }
 
-  async function setState(nextState: AppState): Promise<void> {
+  function setState(nextState: AppState): void {
     appState = nextState;
     renderApp(nextState);
   }
@@ -290,7 +296,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
 
     const nextRecord = createDoseRecord();
     const nextRecords = addDoseRecord(appState.records, nextRecord);
-    await setState({
+    setState({
       ...appState,
       statusMessage: t("savingStatus"),
       statusTone: "info",
@@ -300,7 +306,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
 
     try {
       await storage.setDoseRecords(nextRecords);
-      await setState({
+      setState({
         ...appState,
         records: nextRecords,
         statusMessage: t("savedToast"),
@@ -309,7 +315,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
         hasStorageError: false
       });
     } catch {
-      await setState({
+      setState({
         ...appState,
         statusMessage: t("storageError"),
         statusTone: "error",
@@ -328,7 +334,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
       return;
     }
 
-    await setState({
+    setState({
       ...appState,
       statusMessage: t("clearingStatus"),
       statusTone: "info",
@@ -338,7 +344,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
 
     try {
       await storage.setDoseRecords([]);
-      await setState({
+      setState({
         ...appState,
         records: [],
         statusMessage: t("clearedToast"),
@@ -347,7 +353,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
         hasStorageError: false
       });
     } catch {
-      await setState({
+      setState({
         ...appState,
         statusMessage: t("storageError"),
         statusTone: "error",
@@ -364,7 +370,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
 
     try {
       const [records, premiumState] = await Promise.all([storage.getDoseRecords(), ensurePremiumState(storage)]);
-      await setState({
+      setState({
         records,
         premiumState,
         statusMessage: records.length === 0 ? t("firstRunGuide") : t("readyStatus"),
@@ -374,7 +380,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
       });
     } catch {
       const fallbackState = createInitialPremiumState();
-      await setState({
+      setState({
         records: [],
         premiumState: fallbackState,
         statusMessage: t("storageError"),
