@@ -1,11 +1,9 @@
 import { copyFileSync, existsSync, mkdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
-import { defineConfig, type Plugin } from "vite";
+import { defineConfig, type Plugin, type ResolvedConfig } from "vite";
 
 const publicDirName = "public";
 const outDirName = "dist";
-const publicDir = resolve(__dirname, publicDirName);
-const outDir = resolve(__dirname, outDirName);
 const extensionAssets = [
   "manifest.json",
   "icons/icon16.png",
@@ -14,10 +12,22 @@ const extensionAssets = [
 ] as const;
 
 function ensureExtensionAssets(): Plugin {
+  let config: ResolvedConfig;
+
   return {
     name: "ensure-extension-assets",
     apply: "build",
-    closeBundle() {
+    configResolved(resolvedConfig) {
+      config = resolvedConfig;
+    },
+    writeBundle() {
+      if (!config.publicDir) {
+        throw new Error("Vite publicDir is required for Chrome extension assets.");
+      }
+
+      const publicDir = config.publicDir;
+      const outDir = resolve(config.root, config.build.outDir);
+
       for (const asset of extensionAssets) {
         const source = resolve(publicDir, asset);
         if (!existsSync(source)) {
