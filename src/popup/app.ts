@@ -173,7 +173,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
       createElement(
         "p",
         latestRecord ? "latest-time" : "empty-state",
-        latestRecord ? formatRecordTime(latestRecord) : t("noRecords")
+        latestRecord ? formatRecordTime(latestRecord) : t("emptyLatestRecord")
       )
     );
 
@@ -189,7 +189,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     section.append(title);
 
     if (records.length === 0) {
-      section.append(createElement("p", "empty-state", t("noRecords")));
+      section.append(createElement("p", "empty-state", t("emptyHistoryRecords")));
     } else {
       const list = createElement("ol", "history-list");
       records.slice(0, 10).forEach((record) => {
@@ -367,7 +367,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
       await setState({
         records,
         premiumState,
-        statusMessage: t("readyStatus"),
+        statusMessage: records.length === 0 ? t("firstRunGuide") : t("readyStatus"),
         statusTone: "neutral",
         isBusy: false,
         hasStorageError: false

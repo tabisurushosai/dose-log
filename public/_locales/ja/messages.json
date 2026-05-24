@@ -25,8 +25,14 @@
   "noRecords": {
     "message": "まだ記録はありません。"
   },
+  "emptyLatestRecord": {
+    "message": "まだ記録はありません。のんだ直後に上のボタンを押すと、ここに時刻が表示されます。"
+  },
   "historyTitle": {
     "message": "最近の記録"
+  },
+  "emptyHistoryRecords": {
+    "message": "記録すると、最近の10件がここに並びます。"
   },
   "clearButton": {
     "message": "記録をすべて消す"
@@ -42,6 +48,9 @@
   },
   "readyStatus": {
     "message": "記録できます。"
+  },
+  "firstRunGuide": {
+    "message": "はじめてなら、のんだ直後に大きなボタンを1回押してください。"
   },
   "savingStatus": {
     "message": "保存しています。"

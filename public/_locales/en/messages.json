@@ -25,8 +25,14 @@
   "noRecords": {
     "message": "No records yet."
   },
+  "emptyLatestRecord": {
+    "message": "No records yet. After taking a dose, tap the button above and the time will appear here."
+  },
   "historyTitle": {
     "message": "Recent records"
+  },
+  "emptyHistoryRecords": {
+    "message": "After you record, your 10 most recent records will appear here."
   },
   "clearButton": {
     "message": "Delete all records"
@@ -42,6 +48,9 @@
   },
   "readyStatus": {
     "message": "Ready to record."
+  },
+  "firstRunGuide": {
+    "message": "First time here? After taking a dose, tap the large button once."
   },
   "savingStatus": {
     "message": "Saving..."
