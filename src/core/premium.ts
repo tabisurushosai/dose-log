@@ -1,3 +1,5 @@
+import { isFiniteDateString } from "./dateString";
+
 export const PREMIUM_PRICE_USD = 3;
 export const TRIAL_DAYS = 7;
 export const STRIPE_PAYMENT_LINK = "STRIPE_PAYMENT_LINK";
@@ -27,14 +29,13 @@ export function normalizePremiumState(state: unknown, now: Date = new Date()): P
   }
 
   const candidate = state as Record<string, unknown>;
+  const firstLaunchValue = candidate["firstLaunchAtIso"];
+  const purchasedValue = candidate["purchasedAtIso"];
   const firstLaunchAtIso =
-    typeof candidate.firstLaunchAtIso === "string" && Number.isFinite(Date.parse(candidate.firstLaunchAtIso))
-      ? candidate.firstLaunchAtIso
+    isFiniteDateString(firstLaunchValue)
+      ? firstLaunchValue
       : now.toISOString();
-  const purchasedAtIso =
-    typeof candidate.purchasedAtIso === "string" && Number.isFinite(Date.parse(candidate.purchasedAtIso))
-      ? candidate.purchasedAtIso
-      : undefined;
+  const purchasedAtIso = isFiniteDateString(purchasedValue) ? purchasedValue : undefined;
 
   return {
     firstLaunchAtIso,

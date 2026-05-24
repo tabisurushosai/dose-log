@@ -107,7 +107,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
       return;
     }
 
-    const focusKey = activeElement.dataset.focusKey;
+    const focusKey = activeElement.dataset["focusKey"];
     if (focusKey) {
       pendingFocusKey = focusKey;
     }
@@ -231,7 +231,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     const clearButton = createElement("button", "secondary-button", t("clearButton"));
     clearButton.type = "button";
     clearButton.disabled = records.length === 0;
-    clearButton.dataset.focusKey = "clear-records";
+    clearButton.dataset["focusKey"] = "clear-records";
     clearButton.setAttribute("aria-describedby", `clear-button-description ${STATUS_MESSAGE_ID}`);
     clearButton.addEventListener("click", () => {
       void handleClearRecords();
@@ -291,7 +291,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     const tapButton = createElement("button", "tap-button", t("tapButton"));
     tapButton.type = "button";
     tapButton.disabled = state.isBusy;
-    tapButton.dataset.focusKey = "tap-record";
+    tapButton.dataset["focusKey"] = "tap-record";
     tapButton.setAttribute("aria-busy", String(state.isBusy));
     tapButton.setAttribute("aria-describedby", `tap-button-description ${STATUS_MESSAGE_ID}`);
     tapButton.addEventListener("click", () => {
