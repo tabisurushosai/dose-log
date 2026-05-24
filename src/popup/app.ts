@@ -10,13 +10,15 @@ import {
 import type { AppStorage } from "../storage/appStorage";
 import type { Translator } from "./i18n";
 
+type StatusTone = "neutral" | "info" | "success" | "error";
+
 interface AppState {
-  records: DoseRecord[];
-  premiumState: PremiumState;
-  statusMessage: string;
-  statusTone: "neutral" | "info" | "success" | "error";
-  isBusy: boolean;
-  hasStorageError: boolean;
+  readonly records: readonly DoseRecord[];
+  readonly premiumState: PremiumState;
+  readonly statusMessage: string;
+  readonly statusTone: StatusTone;
+  readonly isBusy: boolean;
+  readonly hasStorageError: boolean;
 }
 
 export interface DoseLogAppDependencies {
@@ -359,6 +361,16 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     renderApp(nextState);
   }
 
+  function setStorageErrorState(state: AppState): void {
+    setState({
+      ...state,
+      statusMessage: t("storageError"),
+      statusTone: "error",
+      isBusy: false,
+      hasStorageError: true
+    });
+  }
+
   async function handleTapRecord(): Promise<void> {
     if (!appState || appState.isBusy) {
       return;
@@ -385,13 +397,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
         hasStorageError: false
       });
     } catch {
-      setState({
-        ...appState,
-        statusMessage: t("storageError"),
-        statusTone: "error",
-        isBusy: false,
-        hasStorageError: true
-      });
+      setStorageErrorState(appState);
     }
   }
 
@@ -423,13 +429,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
         hasStorageError: false
       });
     } catch {
-      setState({
-        ...appState,
-        statusMessage: t("storageError"),
-        statusTone: "error",
-        isBusy: false,
-        hasStorageError: true
-      });
+      setStorageErrorState(appState);
     }
   }
 
