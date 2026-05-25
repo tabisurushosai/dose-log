@@ -208,7 +208,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     container.setAttribute("aria-labelledby", APP_TITLE_ID);
     container.replaceChildren();
 
-    const loadingCard = createElement("section", "card state-card");
+    const loadingCard = createElement("section", "card state-card loading-card");
     const loadingStatus = createElement("p", "status status-info", t("loadingStatus"));
     loadingStatus.setAttribute("role", "status");
     loadingStatus.setAttribute("aria-live", "polite");
