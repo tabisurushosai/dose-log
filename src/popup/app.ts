@@ -265,7 +265,8 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     container.append(section);
   }
 
-  function renderHistory(container: HTMLElement, records: readonly DoseRecord[]): void {
+  function renderHistory(container: HTMLElement, state: AppState): void {
+    const { records } = state;
     const section = createElement("section", "card");
     section.setAttribute("aria-labelledby", "history-title");
 
@@ -280,10 +281,14 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
         t("emptyHistoryRecords", formatNumber(HISTORY_DISPLAY_LIMIT))
       );
       emptyHistory.id = HISTORY_CONTENT_ID;
+      emptyHistory.setAttribute("aria-live", "polite");
+      emptyHistory.setAttribute("aria-atomic", "true");
       section.append(emptyHistory);
     } else {
       const list = createElement("ol", "history-list");
       list.id = HISTORY_CONTENT_ID;
+      list.setAttribute("aria-live", "polite");
+      list.setAttribute("aria-relevant", "additions removals text");
       records.slice(0, HISTORY_DISPLAY_LIMIT).forEach((record) => {
         const item = createElement("li");
         item.append(createRecordTime(record));
@@ -293,8 +298,9 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     }
 
     const clearButton = createElement("button", "secondary-button", t("clearButton"));
+    const isClearButtonDisabled = records.length === 0 || state.isBusy;
     clearButton.type = "button";
-    clearButton.disabled = records.length === 0;
+    clearButton.disabled = isClearButtonDisabled;
     setFocusKey(clearButton, CLEAR_RECORDS_FOCUS_KEY);
     clearButton.setAttribute("aria-controls", RECORDS_REGION_IDREFS);
     clearButton.setAttribute("aria-describedby", `clear-button-description ${STATUS_MESSAGE_ID}`);
@@ -382,7 +388,7 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
 
     renderStatus(root, state);
     renderLatestRecord(root, state.records);
-    renderHistory(root, state.records);
+    renderHistory(root, state);
     renderPremium(root, state.premiumState);
     root.append(createElement("p", "privacy-note", t("privacyNote")));
     restoreFocusedAction();
