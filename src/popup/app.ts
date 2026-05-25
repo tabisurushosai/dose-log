@@ -41,6 +41,11 @@ const HISTORY_CONTENT_ID = "history-content";
 const ONBOARDING_GUIDE_COPY_ID = "onboarding-guide-copy";
 const ONBOARDING_GUIDE_ACTION_ID = "onboarding-guide-action";
 const ONBOARDING_GUIDE_RESULT_ID = "onboarding-guide-result";
+const RECORDS_REGION_IDREFS = `${STATUS_MESSAGE_ID} ${LATEST_RECORD_CONTENT_ID} ${HISTORY_CONTENT_ID}`;
+const CLEAR_RECORDS_FOCUS_KEY = "clear-records";
+const TAP_RECORD_FOCUS_KEY = "tap-record";
+
+type FocusKey = typeof CLEAR_RECORDS_FOCUS_KEY | typeof TAP_RECORD_FOCUS_KEY;
 
 function createElement<K extends keyof HTMLElementTagNameMap>(
   tagName: K,
@@ -55,6 +60,10 @@ function createElement<K extends keyof HTMLElementTagNameMap>(
     element.textContent = textContent;
   }
   return element;
+}
+
+function setFocusKey(element: HTMLElement, focusKey: FocusKey): void {
+  element.dataset["focusKey"] = focusKey;
 }
 
 async function ensurePremiumState(adapter: AppStorage): Promise<PremiumState> {
@@ -286,11 +295,8 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     const clearButton = createElement("button", "secondary-button", t("clearButton"));
     clearButton.type = "button";
     clearButton.disabled = records.length === 0;
-    clearButton.dataset["focusKey"] = "clear-records";
-    clearButton.setAttribute(
-      "aria-controls",
-      `${STATUS_MESSAGE_ID} ${LATEST_RECORD_CONTENT_ID} ${HISTORY_CONTENT_ID}`
-    );
+    setFocusKey(clearButton, CLEAR_RECORDS_FOCUS_KEY);
+    clearButton.setAttribute("aria-controls", RECORDS_REGION_IDREFS);
     clearButton.setAttribute("aria-describedby", `clear-button-description ${STATUS_MESSAGE_ID}`);
     clearButton.addEventListener("click", () => {
       void handleClearRecords();
@@ -353,12 +359,9 @@ export function createDoseLogApp(dependencies: DoseLogAppDependencies): DoseLogA
     const tapButton = createElement("button", "tap-button", tapButtonLabel);
     tapButton.type = "button";
     tapButton.disabled = state.isBusy;
-    tapButton.dataset["focusKey"] = "tap-record";
+    setFocusKey(tapButton, TAP_RECORD_FOCUS_KEY);
     tapButton.setAttribute("aria-busy", String(state.isBusy));
-    tapButton.setAttribute(
-      "aria-controls",
-      `${STATUS_MESSAGE_ID} ${LATEST_RECORD_CONTENT_ID} ${HISTORY_CONTENT_ID}`
-    );
+    tapButton.setAttribute("aria-controls", RECORDS_REGION_IDREFS);
     const tapButtonDescriptionIds = ["tap-button-description", STATUS_MESSAGE_ID];
     if (state.records.length === 0 && !state.hasStorageError) {
       tapButtonDescriptionIds.splice(
