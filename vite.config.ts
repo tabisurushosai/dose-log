@@ -6,6 +6,8 @@ const publicDirName = "public";
 const outDirName = "dist";
 const extensionAssets = [
   "manifest.json",
+  "_locales/ja/messages.json",
+  "_locales/en/messages.json",
   "icons/icon16.png",
   "icons/icon48.png",
   "icons/icon128.png"
@@ -48,6 +50,7 @@ export default defineConfig({
   build: {
     outDir: outDirName,
     emptyOutDir: true,
+    copyPublicDir: true,
     sourcemap: false,
     rollupOptions: {
       input: {
