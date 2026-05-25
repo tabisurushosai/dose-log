@@ -23,7 +23,7 @@
     "message": "はじめて使うときのガイド"
   },
   "onboardingGuideCopy": {
-    "message": "のんだ直後に「$BUTTON$」を1回押してください。保存されるのは時刻だけです。",
+    "message": "最初の記録は、のんだ直後に「$BUTTON$」を1回押すだけです。保存されるのは時刻だけです。",
     "placeholders": {
       "button": {
         "content": "$1"
@@ -38,22 +38,20 @@
       }
     }
   },
+  "onboardingGuideResult": {
+    "message": "押したあと、直近の記録と最近の記録に時刻が表示されます。"
+  },
   "lastRecordTitle": {
     "message": "直近の記録"
   },
   "emptyLatestRecord": {
-    "message": "ここには最後に保存した時刻が表示されます。まずは大きな「$BUTTON$」ボタンを1回押してください。",
-    "placeholders": {
-      "button": {
-        "content": "$1"
-      }
-    }
+    "message": "まだ記録はありません。最初に保存した時刻がここに表示されます。"
   },
   "historyTitle": {
     "message": "最近の記録"
   },
   "emptyHistoryRecords": {
-    "message": "履歴はまだありません。最初の記録を保存すると、最大$COUNT$件までここに並びます。",
+    "message": "履歴はまだありません。最初の記録を保存すると、最近の時刻が最大$COUNT$件までここに並びます。",
     "placeholders": {
       "count": {
         "content": "$1"
