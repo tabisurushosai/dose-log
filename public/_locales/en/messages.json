@@ -23,7 +23,7 @@
     "message": "Getting started"
   },
   "onboardingGuideCopy": {
-    "message": "Right after taking a dose, tap \"$BUTTON$\" once. Only the time is saved.",
+    "message": "For your first record, tap \"$BUTTON$\" once right after taking a dose. Only the time is saved.",
     "placeholders": {
       "button": {
         "content": "$1"
@@ -38,22 +38,20 @@
       }
     }
   },
+  "onboardingGuideResult": {
+    "message": "After that, the time appears in Latest record and Recent records."
+  },
   "lastRecordTitle": {
     "message": "Latest record"
   },
   "emptyLatestRecord": {
-    "message": "Your latest saved time will appear here. Start by tapping the large \"$BUTTON$\" button once.",
-    "placeholders": {
-      "button": {
-        "content": "$1"
-      }
-    }
+    "message": "No records yet. Your first saved time will appear here."
   },
   "historyTitle": {
     "message": "Recent records"
   },
   "emptyHistoryRecords": {
-    "message": "No history yet. After your first record is saved, up to $COUNT$ records will appear here.",
+    "message": "No history yet. After your first record is saved, up to $COUNT$ recent times will appear here.",
     "placeholders": {
       "count": {
         "content": "$1"
