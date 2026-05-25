@@ -1,24 +1,24 @@
-import type { StorageAdapter, StorageKey, StorageValue } from "./storageAdapter";
+import type { StorageAdapter } from "./storageAdapter";
 
-type ChromeStorageItems = Partial<Record<StorageKey, StorageValue>>;
+type ChromeStorageItems = Record<string, unknown | undefined>;
 
-function readFromChromeStorage(key: StorageKey): Promise<StorageValue | undefined> {
+function readFromChromeStorage(key: string): Promise<unknown | undefined> {
   return new Promise((resolve, reject) => {
-    chrome.storage.local.get(key, (items) => {
+    chrome.storage.local.get<ChromeStorageItems>(key, (items) => {
       const error = chrome.runtime.lastError;
       if (error) {
         reject(new Error(error.message));
         return;
       }
 
-      resolve((items as ChromeStorageItems)[key]);
+      resolve(items[key]);
     });
   });
 }
 
-function writeToChromeStorage(values: ChromeStorageItems): Promise<void> {
+function writeToChromeStorage(values: Partial<ChromeStorageItems>): Promise<void> {
   return new Promise((resolve, reject) => {
-    chrome.storage.local.set(values, () => {
+    chrome.storage.local.set<ChromeStorageItems>(values, () => {
       const error = chrome.runtime.lastError;
       if (error) {
         reject(new Error(error.message));
@@ -32,11 +32,11 @@ function writeToChromeStorage(values: ChromeStorageItems): Promise<void> {
 
 export function createChromeStorageAdapter(): StorageAdapter {
   return {
-    async read(key: StorageKey): Promise<StorageValue | undefined> {
+    async read(key: string): Promise<unknown | undefined> {
       return readFromChromeStorage(key);
     },
 
-    async write(key: StorageKey, value: StorageValue): Promise<void> {
+    async write(key: string, value: unknown): Promise<void> {
       await writeToChromeStorage({
         [key]: value
       });
